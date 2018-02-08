@@ -1,0 +1,91 @@
+// Copyright (c) 2018 Justin Decker
+
+//
+// MIT License
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+//
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+/*!
+   \file ISE_Probe.cpp
+   \brief ISE Probe Class Implementation
+
+   ufire.co for links to documentation, examples, and libraries
+   github.com/u-fire/ISE_Probe for feature requests, bug reports, and  questions
+   questions@ufire.co to get in touch with someone
+ */
+
+#include "ISE_pH.h"
+
+/*!
+   \brief Class constructor
+ */
+ISE_pH::ISE_pH()
+{
+  _address = ISE_PROBE_I2C;
+}
+
+ISE_pH::ISE_pH(uint8_t i2c_address)
+{
+  _address = i2c_address;
+}
+
+float ISE_pH::measurepH()
+{
+  // Turn mV into pH
+  pH  = fabs(7.0 - (measuremV() / PROBE_MV_TO_PH));
+  pOH = fabs(pH - 14);
+
+  // Determine the temperature correction
+  if (usingTemperatureCompensation())
+  {
+    float   temp             = measureTemp();
+    uint8_t distance_from_7  = abs(7 - round(pH));
+    uint8_t distance_from_25 = floor(abs(25 - round(temp)) / 10);
+    float   temp_multiplier  = (distance_from_25 * distance_from_7) * TEMP_CORRECTION_FACTOR;
+
+    if ((pH >= 8.0) && (temp >= 35))
+    {
+      // negative
+      temp_multiplier *= -1;
+    }
+
+    if ((pH <= 6.0) && (temp <= 15))
+    {
+      // negative
+      temp_multiplier *= -1;
+    }
+
+    pH += temp_multiplier;
+  }
+
+  if ((pH <= 0.0) || (pH > 14.0)) {
+    pH  = -1;
+    pOH = -1;
+  }
+  if (isinf(pH)) {
+    pH  = -1;
+    pOH = -1;
+  }
+  if (isnan(pH)) {
+    pH  = -1;
+    pOH = -1;
+  }
+  return pH;
+}
