@@ -1,9 +1,7 @@
 import math
+import struct
 import time
-
-import ustruct
-from machine import I2C, Pin
-
+import smbus
 global i2c
 
 ISE_PROBE = 0x3F
@@ -43,10 +41,10 @@ class iseprobe(object):
     tempF = 0
     address = ISE_PROBE
 
-    def __init__(self, address, i2c_bus, scl, sda, **kwargs):
+    def __init__(self, address, i2c_bus, **kwargs):
         global i2c
         self.address = address
-        i2c = I2C(i2c_bus, Pin(scl), Pin(sda))
+        i2c = smbus.SMBus(i2c_bus)
 
     def measuremV(self):
         self._send_command(ISE_MEASURE_MV)
@@ -170,45 +168,49 @@ class iseprobe(object):
 
     def _send_command(self, command):
         global i2c
-        i2c.writeto_mem(self.address, ISE_TASK_REGISTER, bytearray([command]))
+        i2c.write_byte_data(self.address, ISE_TASK_REGISTER, command)
         time.sleep(10 / 1000.0)
 
     def _write_register(self, reg, f):
         global i2c
         n = self.round_total_digits(f)
-        fd = bytearray(ustruct.pack("f", n))
-        i2c.writeto_mem(self.address, reg, fd)
+        fd = bytearray(struct.pack("f", n))
+        data = [0, 0, 0, 0]
+        data[0] = fd[0]
+        data[1] = fd[1]
+        data[2] = fd[2]
+        data[3] = fd[3]
+        self._change_register(reg)
+        i2c.write_i2c_block_data(self.address, reg, data)
         time.sleep(10 / 1000.0)
 
     def _read_register(self, reg):
         global i2c
         data = [0, 0, 0, 0]
-        data[0] = int.from_bytes(i2c.readfrom_mem(self.address, reg, 1), 'big')
-        data[1] = int.from_bytes(i2c.readfrom_mem(
-            self.address, reg + 1, 1), 'big')
-        data[2] = int.from_bytes(i2c.readfrom_mem(
-            self.address, reg + 2, 1), 'big')
-        data[3] = int.from_bytes(i2c.readfrom_mem(
-            self.address, reg + 3, 1), 'big')
+        self._change_register(reg)
+        data[0] = i2c.read_byte(self.address)
+        data[1] = i2c.read_byte(self.address)
+        data[2] = i2c.read_byte(self.address)
+        data[3] = i2c.read_byte(self.address)
         ba = bytearray(data)
-        f = ustruct.unpack('f', ba)[0]
+        f = struct.unpack('f', ba)[0]
         return self.round_total_digits(f)
 
     def _write_byte(self, reg, val):
         global i2c
-        i2c.writeto_mem(self.address, reg, bytearray([val]))
+        i2c.write_byte_data(self.address, reg, val)
         time.sleep(10 / 1000.0)
 
     def _read_byte(self, reg):
         global i2c
-        return int.from_bytes(i2c.readfrom_mem(self.address, reg, 1), 'big')
+        self._change_register(reg)
+        time.sleep(10 / 1000.0)
+        return i2c.read_byte(self.address)
 
     def magnitude(self, x):
         if math.isnan(x):
             return 0
-        if math.isinf(x):
-            return 0
-        return 0 if x == 0 else int(math.floor(math.log(abs(x), 10))) + 1
+        return 0 if x == 0 else int(math.floor(math.log10(abs(x)))) + 1
 
     def round_total_digits(self, x, digits=7):
         return round(x, digits - self.magnitude(x))

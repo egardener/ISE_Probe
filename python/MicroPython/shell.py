@@ -1,91 +1,91 @@
 import cmd
 
-from phprobe import phprobe
+from iseprobe import iseprobe
 
-ph = phprobe(-1, scl=17, sda=16)
+ise = iseprobe(0x3f, -1, scl=5, sda=4)
 
 
-class pHShell(cmd.Cmd):
+class iseshell(cmd.Cmd):
     prompt = '> '
 
     def do_config(self, a):
         """prints out all the configuration data\nparameters: none"""
         print("config: ")
-        print("\toffset: " + str(ph.getCalibrateOffset()))
-        print("\tdual point: " + str(ph.usingDualPoint()))
-        print("\tlow reference / read: " + str(ph.getCalibrateLow()) + " / " + str(ph.getCalibrateLowReading()))
-        print("\thigh reference / reading: " + str(ph.getCalibrateHigh()) + " / " + str(ph.getCalibrateHighReading()))
-        print("\ttemp. compensation: " + str(ph.usingTemperatureCompensation()))
-        print("\tversion: " + (hex(ph.getVersion())))
+        print("\toffset: " + str(ise.getCalibrateOffset()))
+        print("\tdual point: " + str(ise.usingDualPoint()))
+        print("\tlow reference / read: " + str(ise.getCalibrateLowReference()) + " / " + str(ise.getCalibrateLowReading()))
+        print("\thigh reference / reading: " + str(ise.getCalibrateHighReference()) + " / " + str(ise.getCalibrateHighReading()))
+        print("\ttemp. compensation: " + str(ise.usingTemperatureCompensation()))
+        print("\tversion: " + (hex(ise.getVersion())))
 
     def do_reset(self, a):
         """reset all saved values\nparameters: none"""
-        ph.reset()
+        ise.reset()
 
     def do_temp(self, a):
         """measures the temperature\nparameters: none"""
-        ph.measureTemp()
-        print("C/F: " + str(ph.tempC) + " / " + str(ph.tempF))
+        ise.measureTemp()
+        print("C/F: " + str(ise.tempC) + " / " + str(ise.tempF))
 
     def do_cal(self, solution_pH):
         """calibrates the device\nparameters:\n\tcalibration solution in mS"""
         if solution_pH:
-            ph.calibrateSingle(float(solution_pH))
+            ise.calibrateSingle(float(solution_pH))
 
-        print("offset: " + str(ph.getCalibrateOffset()))
+        print("offset: " + str(ise.getCalibrateOffset()))
 
-    def do_ph(self, a):
+    def do_mv(self, a):
         """starts a ph measurement\nparameters: none"""
-        ph.measurepH()
-        print("pH: " + str(ph.pH))
+        ise.measuremV()
+        print("mV: " + str(ise.mV))
 
     def do_low(self, low_reference_pH):
         """returns or sets the low reference/reading values\nparameters\n\tlow reference solution in mS"""
         if low_reference_pH:
-            ph.calibrateProbeLow(float(low_reference_pH))
+            ise.calibrateProbeLow(float(low_reference_pH))
 
-        print("\tlow reference / read: " + str(ph.getCalibrateLow()) +
-              " / " + str(ph.getCalibrateLowReading()))
+        print("\tlow reference / read: " + str(ise.getCalibrateLowReference()) +
+              " / " + str(ise.getCalibrateLowReading()))
 
     def do_high(self, high_reference_pH):
         """returns or sets the high referencen/reading values\nparameters\n\thigh reference solution in mS"""
         if high_reference_pH:
-            ph.calibrateProbeHigh(float(high_reference_pH))
+            ise.calibrateProbeHigh(float(high_reference_pH))
 
-        print("\thigh reference / reading: " + str(ph.getCalibrateHigh()) + " / " + str(ph.getCalibrateHighReading()))
+        print("\thigh reference / reading: " + str(ise.getCalibrateHighReference()) + " / " + str(ise.getCalibrateHighReading()))
 
     def do_tc(self, arg):
         """returns or sets temperature compensation information\nparameters\n\tbool to use compensation\n\ttemperature constant to use (255 for actual)"""
         a = arg.split()
 
         if len(a) >= 1:
-            ph.useTemperatureCompensation(int(a[0]))
+            ise.useTemperatureCompensation(int(a[0]))
 
-        print("\ttemp. compensation: " + str(ph.usingTemperatureCompensation()))
+        print("\ttemp. compensation: " + str(ise.usingTemperatureCompensation()))
 
     def do_dp(self, useDP):
         """returns or sets dual point use\nparameters\n\tbool 0/1"""
         if useDP:
-            ph.useDualPoint(int(useDP))
+            ise.useDualPoint(int(useDP))
 
-        print("\tdual point: " + str(ph.usingDualPoint()))
+        print("\tdual point: " + str(ise.usingDualPoint()))
 
     def do_data(self, a):
         """prints all the data registers"""
-        print("pH: " + str(ph.pH))
-        print("mV: " + str(ph.mV))
-        print("pOH: " + str(ph.pOH))
+        print("pH: " + str(ise.pH))
+        print("mV: " + str(ise.mV))
+        print("pOH: " + str(ise.pOH))
 
     def do_version(self, a):
         """prints the version register"""
-        print("\tversion: " + (hex(ph.getVersion())))
+        print("\tversion: " + (hex(ise.getVersion())))
 
     def do_i2c(self, i2cAddress):
         """changes the I2C address"""
-        ph.setI2CAddress(i2cAddress)
+        ise.setI2CAddress(i2cAddress)
 
     def do_EOF(self, line):
         return True
 
 
-pHShell().cmdloop()
+iseshell().cmdloop()

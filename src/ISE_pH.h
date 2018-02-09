@@ -48,6 +48,7 @@ public:
   ISE_pH(uint8_t i2c_address);
   ISE_pH();
   float measurepH();
+  float pHtomV(float pH);
 };
 
   #endif // ifndef ISEPROBE_H

@@ -89,3 +89,8 @@ float ISE_pH::measurepH()
   }
   return pH;
 }
+
+float pHtomV(float pH)
+{
+  return (7 - pH) * PROBE_MV_TO_PH;
+}

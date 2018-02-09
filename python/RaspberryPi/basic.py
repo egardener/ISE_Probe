@@ -1,8 +1,6 @@
-from phprobe import phprobe
+from iseprobe import iseprobe
 
-ph = phprobe(3)
+mv = iseprobe(0x3f, 3)
 
-ph.measurepH()
-print("pH: " + str(ph.pH))
-print("mV: " + str(ph.mV))
-print("pOH: " + str(ph.pOH))
+mv.measuremV()
+print("mV: " + str(mv.mV))
