@@ -78,7 +78,7 @@
 #define ISE_DUALPOINT_CONFIG_BIT 0         /*!< dual point config bit */
 #define ISE_TEMP_COMPENSATION_CONFIG_BIT 1 /*!< temperature compensation config bit */
 
-class ISE_Probe                            /*! pH Class */
+class ISE_Probe                            /*! ISE Class */
 {
 public:
 

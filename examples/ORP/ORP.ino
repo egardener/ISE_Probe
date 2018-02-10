@@ -4,15 +4,15 @@
    questions@ufire.co to get in touch with someone
  */
 
- #include "uFire_ISE.h"
+ #include "ISE_ORP.h"
 
-ISE_Probe mv;
+ISE_ORP orp;
 
 void setup() {
   Serial.begin(9600);
 }
 
 void loop() {
-  mv.measuremV();
-  Serial.print("mV: "); Serial.println(mv.mV);
+  orp.measureORP();
+  Serial.print("mV: "); Serial.println(orp.ORP);
 }

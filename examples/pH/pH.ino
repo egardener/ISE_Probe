@@ -4,15 +4,18 @@
    questions@ufire.co to get in touch with someone
  */
 
- #include "uFire_ISE.h"
+ #include "ISE_pH.h"
 
-ISE_Probe mv;
+ISE_pH ph;
 
 void setup() {
   Serial.begin(9600);
 }
 
 void loop() {
-  mv.measuremV();
-  Serial.print("mV: "); Serial.println(mv.mV);
+  ph.measurepH();
+  Serial.print("pH: "); Serial.println(ph.pH);
+  Serial.print("pOH: "); Serial.println(ph.pOH);
+  Serial.print("mV: "); Serial.println(ph.mV);
+  Serial.println();
 }

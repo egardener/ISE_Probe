@@ -91,18 +91,19 @@ float ISE_Probe::measureTemp()
 
 /*!
    \code
-    ISE_Probe::calibrateSingle(7.0);
+    ISE_Probe::calibrateSingle(100);
    \endcode
    \brief Calibrates the probe using a single point.
+   \param solutionmV          the mV of the calibration solution
    \post result will be saved in the device's EEPROM and used
    automatically thereafter
  */
-void ISE_Probe::calibrateSingle(float solutionpH)
+void ISE_Probe::calibrateSingle(float solutionmV)
 {
   bool dualpoint = usingDualPoint();
 
   useDualPoint(false);
-  _write_register(ISE_SOLUTION_REGISTER, solutionpH);
+  _write_register(ISE_SOLUTION_REGISTER, solutionmV);
   _send_command(ISE_CALIBRATE_SINGLE);
   delay(ISE_MV_MEASURE_TIME);
   useDualPoint(dualpoint);
@@ -110,45 +111,45 @@ void ISE_Probe::calibrateSingle(float solutionpH)
 
 /*!
    \code
-    ISE_Probe::calibrateProbeLow(4.0);
+    ISE_Probe::calibrateProbeLow(50);
    \endcode
    \brief Calibrates the dual-point values for the low reading and saves them
    in the devices's EEPROM.
-   \param solutionpH          the pH of the calibration solution
+   \param solutionmV          the mV of the calibration solution
  */
-void ISE_Probe::calibrateProbeLow(float solutionpH)
+void ISE_Probe::calibrateProbeLow(float solutionmV)
 {
   bool dualpoint = usingDualPoint();
 
   useDualPoint(false);
-  _write_register(ISE_SOLUTION_REGISTER, solutionpH);
+  _write_register(ISE_SOLUTION_REGISTER, solutionmV);
   _send_command(ISE_CALIBRATE_LOW);
-  delay(ISE_MV_MEASURE_TIME);
+  delay(ISE_MV_MEASURE_TIME + 5);
   useDualPoint(dualpoint);
 }
 
 /*!
    \code
-   ISE_Probe::calibrateProbeHigh(7.0);
+   ISE_Probe::calibrateProbeHigh(400);
    \endcode
    \brief Calibrates the dual-point values for the high reading and saves them
    in the devices's EEPROM.
-   \param solutionpH          the pH of the calibration solution
+   \param solutionmV          the mV of the calibration solution
  */
-void ISE_Probe::calibrateProbeHigh(float solutionpH)
+void ISE_Probe::calibrateProbeHigh(float solutionmV)
 {
   bool dualpoint = usingDualPoint();
 
   useDualPoint(false);
-  _write_register(ISE_SOLUTION_REGISTER, solutionpH);
+  _write_register(ISE_SOLUTION_REGISTER, solutionmV);
   _send_command(ISE_CALIBRATE_HIGH);
-  delay(ISE_MV_MEASURE_TIME);
+  delay(ISE_MV_MEASURE_TIME + 5);
   useDualPoint(dualpoint);
 }
 
 /*!
    \code
-   ISE_Probe::setDualPointCalibration(4.0, 7.0, 3.8, 7.2);
+   ISE_Probe::setDualPointCalibration(50, 100, 48, 134);
    \endcode
    \brief Sets all the values for dual point calibration and saves them
    in the devices's EEPROM.
@@ -273,7 +274,6 @@ void ISE_Probe::useDualPoint(bool b)
   }
 
   _write_byte(ISE_CONFIG_REGISTER, retval);
-  Serial.println(retval);
 }
 
 /*!

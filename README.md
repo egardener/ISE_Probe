@@ -13,12 +13,20 @@ An I2C slave device that can interface with any voltage based sensor such as a p
 It is designed to allow multiple probes to be connected to one controlling device and not interfere with each other. For example, a pH and ORP probe can be connected to the same master device and submerged in the same solution without causing cross probe interferance.
 
 #### Using it
-There is extensive [documentation](http://ufire.co/ISE_Probe/) on the use and setup of the device. This library is in the Arduino IDE, Particle.io IDE and a python implementation for Raspberry Pi and MicroPython is also available.
-
+There is extensive [documentation](http://ufire.co/ISE_Probe/) on the use and setup of the device. The library to use it is in the Arduino IDE, Particle.io IDE and a python implementation for Raspberry Pi and MicroPython is also available.
 
 ~~~
-#include <pHProbe.h>
-pH_Probe _pH;
-
-pH = _pH.measurepH();
+#include "uFire_ISE.h"
+ISE_Probe mv;
+mv.measuremV();
+~~~
+~~~
+#include "ISE_pH.h"
+ISE_pH ph;
+ph.measurepH();
+~~~
+~~~
+#include "ISE_ORP.h"
+ISE_ORP orp;
+orp.measureORP();
 ~~~
