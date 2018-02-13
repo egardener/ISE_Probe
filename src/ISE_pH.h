@@ -49,6 +49,9 @@ public:
   ISE_pH();
   float measurepH();
   float pHtomV(float pH);
+  void  calibrateSingle(float solutionpH);
+  void  calibrateProbeLow(float solutionpH);
+  void  calibrateProbeHigh(float solutionpH);
 };
 
   #endif // ifndef ISEPROBE_H

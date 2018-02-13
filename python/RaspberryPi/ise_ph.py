@@ -29,5 +29,14 @@ class ise_ph(iseprobe):
 
         return self.pH
 
-    def pHtomV(pH):
+    def calibrateSingle(self, solutionpH):
+        super(iseprobe, self).calibrateSingle(pHtomV(solutionpH))
+
+    def calibrateProbeHigh(self, solutionpH):
+        super(iseprobe, self).calibrateProbeHigh(pHtomV(solutionpH))
+
+    def calibrateProbeLow(self, solutionpH):
+        super(iseprobe, self).calibrateProbeLow(pHtomV(solutionpH))
+
+    def pHtomV(self, pH):
         return (7 - pH) * PROBE_MV_TO_PH

@@ -94,3 +94,18 @@ float ISE_pH::pHtomV(float pH)
 {
   return (7 - pH) * PROBE_MV_TO_PH;
 }
+
+void ISE_pH::calibrateSingle(float solutionpH)
+{
+  ISE_Probe::calibrateSingle(pHtomV(solutionpH));
+}
+
+void ISE_pH::calibrateProbeLow(float solutionpH)
+{
+  ISE_Probe::calibrateProbeLow(pHtomV(solutionpH));
+}
+
+void ISE_pH::calibrateProbeHigh(float solutionpH)
+{
+  ISE_Probe::calibrateProbeHigh(pHtomV(solutionpH));
+}
