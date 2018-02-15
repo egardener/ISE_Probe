@@ -78,7 +78,9 @@
 #define ISE_DUALPOINT_CONFIG_BIT 0         /*!< dual point config bit */
 #define ISE_TEMP_COMPENSATION_CONFIG_BIT 1 /*!< temperature compensation config bit */
 
-class ISE_Probe                            /*! ISE Class */
+// #define ISE_SW_I2C
+
+class ISE_Probe /*! ISE Class */
 {
 public:
 
@@ -87,6 +89,7 @@ public:
   float tempF; /*!< Temperature in F */
   float mV;    /*!< mV of probe */
   ISE_Probe();
+  ISE_Probe(uint8_t i2c_address);
   ~ISE_Probe();
   float measuremV();
   float measureTemp();

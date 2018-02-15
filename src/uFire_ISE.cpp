@@ -43,6 +43,12 @@ ISE_Probe::ISE_Probe()
   Wire.begin();
 }
 
+ISE_Probe::ISE_Probe(uint8_t i2c_address)
+{
+  _address = i2c_address;
+  Wire.begin();
+}
+
 /*!
    \brief Class destructor
  */

@@ -8,6 +8,11 @@
 
 ISE_Probe mv;
 
+// multiple probes can be connected using different I2C addresses. Install the
+// shell example and change the address with 'i2c 65' for example, then create a
+// new instance using:
+// ISE_Probe mv2(65);
+
 void setup() {
   Serial.begin(9600);
 }
