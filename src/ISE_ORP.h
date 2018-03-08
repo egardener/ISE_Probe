@@ -35,7 +35,7 @@
 #define ISE_ORP_H
 
 #include <math.h>
-#include <uFire_ISE.h>
+#include "uFire_ISE.h"
 
 #define POTENTIAL_REGISTER_ADDRESS 100
 

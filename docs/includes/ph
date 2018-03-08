@@ -12,6 +12,8 @@
 
 <p>the measured result in pH</p>
 
+<p>-1 is returned if there is an error</p>
+
 <h2 id="void-calibratesingle-float-solutionph"><code class="prettyprint">void calibrateSingle(float solutionpH)</code></h2>
 
 <p>Calibrates the probe using a single point using a pH value.</p>

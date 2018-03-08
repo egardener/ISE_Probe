@@ -92,7 +92,7 @@
 
 <h2 id="float-getcalibrateoffset"><code class="prettyprint">float getCalibrateOffset()</code></h2>
 
-<p>Retrieves the single-point offset from the device.</p>
+<p>Returns the single-point offset from the device.</p>
 <pre class="highlight cpp tab-cpp"><code><span class="kt">float</span> <span class="n">offset</span> <span class="o">=</span> <span class="n">ISE_Probe</span><span class="o">::</span><span class="n">getCalibrateOffset</span><span class="p">();</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">offset</span> <span class="o">=</span> <span class="n">ISE</span><span class="o">.</span><span class="n">getCalibrateOffset</span><span class="p">()</span>
 </code></pre><pre class="highlight shell tab-shell"><code>cal
@@ -103,7 +103,7 @@
 
 <h2 id="void-usetemperaturecompensation-bool-b"><code class="prettyprint">void useTemperatureCompensation(bool b)</code></h2>
 
-<p>Configures the device to use temperature compensation or not.</p>
+<p>Configures the device to use temperature compensation.</p>
 <pre class="highlight cpp tab-cpp"><code><span class="n">ISE_Probe</span><span class="o">::</span><span class="n">useTemperatureCompensation</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">ISE</span><span class="o">.</span><span class="n">useTemperatureCompensation</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
 </code></pre><pre class="highlight shell tab-shell"><code>tc 1
@@ -152,7 +152,7 @@
 
 <h2 id="float-getcalibratehighreference"><code class="prettyprint">float getCalibrateHighReference()</code></h2>
 
-<p>Retrieves the dual-point calibration high reference value.</p>
+<p>Returns the dual-point calibration high reference value.</p>
 <pre class="highlight cpp tab-cpp"><code><span class="kt">float</span> <span class="n">calHigh</span> <span class="o">=</span> <span class="n">ISE_Probe</span><span class="o">::</span><span class="n">getCalibrateHighReference</span><span class="p">();</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">calHigh</span> <span class="o">=</span> <span class="n">ISE</span><span class="o">.</span><span class="n">getCalibrateHighReference</span><span class="p">()</span>
 </code></pre><pre class="highlight shell tab-shell"><code>high
@@ -163,7 +163,7 @@
 
 <h2 id="float-getcalibratelowreference"><code class="prettyprint">float getCalibrateLowReference()</code></h2>
 
-<p>Retrieves the dual-point calibration low reference value.</p>
+<p>Returns the dual-point calibration low reference value.</p>
 <pre class="highlight cpp tab-cpp"><code><span class="kt">float</span> <span class="n">calLow</span> <span class="o">=</span> <span class="n">ISE_Probe</span><span class="o">::</span><span class="n">getCalibrateLowReference</span><span class="p">();</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">calLow</span> <span class="o">=</span> <span class="n">ISE</span><span class="o">.</span><span class="n">getCalibrateLowReference</span><span class="p">()</span>
 </code></pre><pre class="highlight cpp tab-cpp"><code><span class="n">low</span>
@@ -174,7 +174,7 @@
 
 <h2 id="uint8_t-getversion"><code class="prettyprint">uint8_t getVersion()</code></h2>
 
-<p>Retrieves the firmware version of the device.</p>
+<p>Returns the firmware version of the device.</p>
 <pre class="highlight cpp tab-cpp"><code><span class="kt">uint8_t</span> <span class="n">version</span> <span class="o">=</span> <span class="n">ISE_Probe</span><span class="o">::</span><span class="n">getVersion</span><span class="p">();</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">version</span> <span class="o">=</span> <span class="n">ISE</span><span class="o">.</span><span class="n">getVersion</span><span class="p">()</span>
 </code></pre><pre class="highlight shell tab-shell"><code>version

@@ -35,7 +35,7 @@
 #define ISE_PH_H
 
 #include <math.h>
-#include <uFire_ISE.h>
+#include "uFire_ISE.h"
 
 #define PROBE_MV_TO_PH 59.2
 #define TEMP_CORRECTION_FACTOR 0.03

@@ -78,9 +78,7 @@
 #define ISE_DUALPOINT_CONFIG_BIT 0         /*!< dual point config bit */
 #define ISE_TEMP_COMPENSATION_CONFIG_BIT 1 /*!< temperature compensation config bit */
 
-// #define ISE_SW_I2C
-
-class ISE_Probe /*! ISE Class */
+class ISE_Probe                            /*! ISE Class */
 {
 public:
 
