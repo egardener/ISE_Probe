@@ -72,9 +72,7 @@ class iseshell(cmd.Cmd):
 
     def do_data(self, a):
         """prints all the data registers"""
-        print("pH: " + str(ise.pH))
         print("mV: " + str(ise.mV))
-        print("pOH: " + str(ise.pOH))
 
     def do_version(self, a):
         """prints the version register"""

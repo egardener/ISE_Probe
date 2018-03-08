@@ -258,8 +258,11 @@
 <h2 id="characteristics">Characteristics</h2>
 
 <ul>
-<li><strong>Measurement range</strong>: -2.5 volts to 2.5 volts</li>
+<li><strong>mV Measurement range</strong>: -2.5 volts to 2.5 volts</li>
+<li>**mV Resolution: 1 mV</li>
+<li>**mV Accuracy: ± 5 mV</li>
 <li><strong>Temperature range</strong>: -2 - 35 C</li>
+<li><strong>Temperature Accuracy</strong>: 0.05 C</li>
 <li><strong>Interface</strong>: I2C</li>
 <li><strong>Current use</strong>: ~10mA peak, low idle current ~1mA</li>
 <li><strong>Supply voltage range</strong>: 3.3 - 5.5V</li>
@@ -297,24 +300,24 @@
 
 <h2 id="temperature-probe-connections">Temperature Probe Connections</h2>
 
-<p>The temperature probe comes with a 3-wire header. The VCC pin is labeled with a triangle.</p>
+<p>The temperature probe comes with a 3-wire header; any 3-wire DS18B20 will work. The VCC pin is labeled with a triangle:</p>
 
 <table><thead>
 <tr>
-<th style="text-align: center">pH Probe Interface</th>
+<th style="text-align: center">EC Salinity Probe</th>
 <th style="text-align: center">Temperature Probe</th>
 </tr>
 </thead><tbody>
 <tr>
-<td style="text-align: center">▲</td>
+<td style="text-align: center">▲ (VCC</td>
 <td style="text-align: center">▲</td>
 </tr>
 <tr>
-<td style="text-align: center">(pin 2)</td>
+<td style="text-align: center">(Data)</td>
 <td style="text-align: center">(pin 2)</td>
 </tr>
 <tr>
-<td style="text-align: center">(pin 3)</td>
+<td style="text-align: center">(GND)</td>
 <td style="text-align: center">(pin 3)</td>
 </tr>
 </tbody></table>
@@ -526,7 +529,7 @@
 
 <h2 id="float-getcalibrateoffset"><code class="prettyprint">float getCalibrateOffset()</code></h2>
 
-<p>Retrieves the single-point offset from the device.</p>
+<p>Returns the single-point offset from the device.</p>
 <pre class="highlight cpp tab-cpp"><code><span class="kt">float</span> <span class="n">offset</span> <span class="o">=</span> <span class="n">ISE_Probe</span><span class="o">::</span><span class="n">getCalibrateOffset</span><span class="p">();</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">offset</span> <span class="o">=</span> <span class="n">ISE</span><span class="o">.</span><span class="n">getCalibrateOffset</span><span class="p">()</span>
 </code></pre><pre class="highlight shell tab-shell"><code>cal
@@ -537,7 +540,7 @@
 
 <h2 id="void-usetemperaturecompensation-bool-b"><code class="prettyprint">void useTemperatureCompensation(bool b)</code></h2>
 
-<p>Configures the device to use temperature compensation or not.</p>
+<p>Configures the device to use temperature compensation.</p>
 <pre class="highlight cpp tab-cpp"><code><span class="n">ISE_Probe</span><span class="o">::</span><span class="n">useTemperatureCompensation</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">ISE</span><span class="o">.</span><span class="n">useTemperatureCompensation</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
 </code></pre><pre class="highlight shell tab-shell"><code>tc 1
@@ -586,7 +589,7 @@
 
 <h2 id="float-getcalibratehighreference"><code class="prettyprint">float getCalibrateHighReference()</code></h2>
 
-<p>Retrieves the dual-point calibration high reference value.</p>
+<p>Returns the dual-point calibration high reference value.</p>
 <pre class="highlight cpp tab-cpp"><code><span class="kt">float</span> <span class="n">calHigh</span> <span class="o">=</span> <span class="n">ISE_Probe</span><span class="o">::</span><span class="n">getCalibrateHighReference</span><span class="p">();</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">calHigh</span> <span class="o">=</span> <span class="n">ISE</span><span class="o">.</span><span class="n">getCalibrateHighReference</span><span class="p">()</span>
 </code></pre><pre class="highlight shell tab-shell"><code>high
@@ -597,7 +600,7 @@
 
 <h2 id="float-getcalibratelowreference"><code class="prettyprint">float getCalibrateLowReference()</code></h2>
 
-<p>Retrieves the dual-point calibration low reference value.</p>
+<p>Returns the dual-point calibration low reference value.</p>
 <pre class="highlight cpp tab-cpp"><code><span class="kt">float</span> <span class="n">calLow</span> <span class="o">=</span> <span class="n">ISE_Probe</span><span class="o">::</span><span class="n">getCalibrateLowReference</span><span class="p">();</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">calLow</span> <span class="o">=</span> <span class="n">ISE</span><span class="o">.</span><span class="n">getCalibrateLowReference</span><span class="p">()</span>
 </code></pre><pre class="highlight cpp tab-cpp"><code><span class="n">low</span>
@@ -608,7 +611,7 @@
 
 <h2 id="uint8_t-getversion"><code class="prettyprint">uint8_t getVersion()</code></h2>
 
-<p>Retrieves the firmware version of the device.</p>
+<p>Returns the firmware version of the device.</p>
 <pre class="highlight cpp tab-cpp"><code><span class="kt">uint8_t</span> <span class="n">version</span> <span class="o">=</span> <span class="n">ISE_Probe</span><span class="o">::</span><span class="n">getVersion</span><span class="p">();</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">version</span> <span class="o">=</span> <span class="n">ISE</span><span class="o">.</span><span class="n">getVersion</span><span class="p">()</span>
 </code></pre><pre class="highlight shell tab-shell"><code>version
@@ -634,6 +637,8 @@
 <h3 id="returns">Returns</h3>
 
 <p>the measured result in pH</p>
+
+<p>-1 is returned if there is an error</p>
 
 <h2 id="void-calibratesingle-float-solutionph"><code class="prettyprint">void calibrateSingle(float solutionpH)</code></h2>
 
