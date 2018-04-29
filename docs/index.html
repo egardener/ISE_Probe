@@ -251,12 +251,12 @@
       <div class="content">
         <h1 id="introduction">Introduction</h1>
 
-<p>The ISE (Ion Specific Electrode) Probe Interface can be used to read any probe that outputs a voltage in the range of -2.5 volts to 2.5 volts. pH and ORP are supported with specific libraries, but it is very easy to use another voltage based probe by extending the library.</p>
+<p>The ISE (Ion Specific Electrode) Probe Interface can be used to read any probe that outputs a voltage in the range of -1024 mV to 1024 mV. pH and ORP are supported with specific libraries, but it is very easy to use another mV based probe by extending the library.</p>
 
 <h2 id="characteristics">Characteristics</h2>
 
 <ul>
-<li><strong>mV Measurement range</strong>: -2.5 volts to 2.5 volts when run at 5 volts, -2.5 to 1 volt when powered at 3.3 volts</li>
+<li><strong>mV Measurement range</strong>: -1024 mV to 1024 mV</li>
 <li><strong>mV Accuracy</strong>: ± 5 mV (equal to pH ± 0.1)</li>
 <li><strong>Temperature range</strong>: -2 to 35 C</li>
 <li><strong>Temperature Precision</strong>: 0.05 C</li>
@@ -336,7 +336,7 @@
 
 <h2 id="raspberry-pi">Raspberry Pi</h2>
 
-<p>Before you can run anything, you will need to enable software I2C, as the Pi&rsquo;s hardware implementation has a clock-stretching bug that will prevent it from working with the pH probe.</p>
+<p>Before you can run anything, you will need to enable software I2C; the Pi&rsquo;s hardware implementation has a clock-stretching bug that will prevent it from working with the probe.</p>
 
 <ol>
 <li><code class="prettyprint">sudo nano /boot/config.txt</code> and scroll to the bottom</li>
@@ -372,7 +372,7 @@ replacing <code class="prettyprint">&lt;pin&gt;</code> with whatever pin you&rsq
 </code></pre>
 <p>Single point calibration is done in the mV unit. To begin a single point calibration, submerge the probe and wait for the readings to stabilize. Then call <code class="prettyprint">calibrateSingle</code> and pass the value the probe should be reading in mV. After calling it, the results are saved in the device&rsquo;s EEPROM and used automatically.</p>
 
-<p>As an example, if an ORP probe is reading 200 mV in a 300 mV solution, call <code class="prettyprint">calibrateSingle(300)</code>.</p>
+<p>As an example, if an ORP probe is reading 560 mV in a 600 mV solution, call <code class="prettyprint">calibrateSingle(600)</code>.</p>
 
 <h3 id="dual-point">Dual Point</h3>
 
@@ -412,7 +412,7 @@ replacing <code class="prettyprint">&lt;pin&gt;</code> with whatever pin you&rsq
 
 <h2 id="measurement-time">Measurement Time</h2>
 
-<p>A mV measurement takes 500 ms. A temperature measurement takes 750ms.Single, low, and high point calibration each tak 4.5 seconds.</p>
+<p>A mV measurement takes 500 ms. A temperature measurement takes 750ms.</p>
 
 <h2 id="probe-maintenance">Probe Maintenance</h2>
 
