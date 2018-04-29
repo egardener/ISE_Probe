@@ -253,15 +253,13 @@
 
 <p>The ISE (Ion Specific Electrode) Probe Interface can be used to read any probe that outputs a voltage in the range of -2.5 volts to 2.5 volts. pH and ORP are supported with specific libraries, but it is very easy to use another voltage based probe by extending the library.</p>
 
-<p>Multiple ISE interface boards can be connected to a controlling device at the same time. They do not interfere with each other. For example, a pH and ORP probe can be connected to the same device and in the same solution to be measured without causing cross-probe interference.</p>
-
 <h2 id="characteristics">Characteristics</h2>
 
 <ul>
 <li><strong>mV Measurement range</strong>: -2.5 volts to 2.5 volts when run at 5 volts, -2.5 to 1 volt when powered at 3.3 volts</li>
 <li><strong>mV Accuracy</strong>: ± 5 mV (equal to pH ± 0.1)</li>
 <li><strong>Temperature range</strong>: -2 to 35 C</li>
-<li><strong>Temperature Accuracy</strong>: 0.05 C</li>
+<li><strong>Temperature Precision</strong>: 0.05 C</li>
 <li><strong>Interface</strong>: I2C</li>
 <li><strong>Current use</strong>: ~10mA peak, low idle current ~1mA</li>
 <li><strong>Supply voltage range</strong>: 3.3 to 5.5V</li>
@@ -308,7 +306,7 @@
 </tr>
 </thead><tbody>
 <tr>
-<td style="text-align: center">▲ (VCC</td>
+<td style="text-align: center">▲ (VCC)</td>
 <td style="text-align: center">▲</td>
 </tr>
 <tr>
@@ -415,46 +413,6 @@ replacing <code class="prettyprint">&lt;pin&gt;</code> with whatever pin you&rsq
 <h2 id="measurement-time">Measurement Time</h2>
 
 <p>A mV measurement takes 500 ms. A temperature measurement takes 750ms.Single, low, and high point calibration each tak 4.5 seconds.</p>
-
-<h2 id="averaging">Averaging</h2>
-
-<p>Because the probe and interface board use inexpensive components, to get the best results, averaging is used. A running median sort is used; 9 measurements are taken and the middle 5 are averaged together. It will take approximately 4.5 seconds to return a fully averaged measurment, and 500 ms per measurement thereafter. This is most suitable to taking continuous measurements. If you are taking measurments every 30 minutes for example, you can still benefit from the averaging by taking at least 9 measurments; less than that, and you will be using data from your previous sampling time.</p>
-
-<p>If you want to use the raw values, pass <code class="prettyprint">useAveraging(false)</code> to turn it off.</p>
-
-<h2 id="interference">Interference</h2>
-
-<p>Multiple ISE probes and multiple EC-Salinity probes can all be connected together. The probes have been designed, using hardware and software, to work together. Mixing another company&rsquo;s interface board likely won&rsquo;t work. <strong><em>It is not galvanic isolation and you may run into difficulties using these devices in a pre-existing design.</em></strong></p>
-
-<p>The way various probes interact with each other, in varying solutions, additional hardware, power source, path(s) to ground, and innumerable other factors, play a role in interference. A majority of the above issues can be corrected with a galvanic isolation circuit; the trade-off is cost and complexity.</p>
-
-<table><thead>
-<tr>
-<th style="text-align: center"></th>
-<th style="text-align: center">pH ISE Probe Interface</th>
-<th style="text-align: center">ORP ISE Probe Interface</th>
-<th style="text-align: center">EC-Salinity Probe Interface</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: center"><strong>pH ISE Probe Interface</strong></td>
-<td style="text-align: center">No interference</td>
-<td style="text-align: center">No interference</td>
-<td style="text-align: center">No interference</td>
-</tr>
-<tr>
-<td style="text-align: center"><strong>ORP ISE Probe Interface</strong></td>
-<td style="text-align: center">No interference</td>
-<td style="text-align: center">No interference</td>
-<td style="text-align: center">Slight linear interference</td>
-</tr>
-<tr>
-<td style="text-align: center"><strong>EC-Salinity Probe Interface</strong></td>
-<td style="text-align: center">No interference</td>
-<td style="text-align: center">No interference</td>
-<td style="text-align: center">No interference</td>
-</tr>
-</tbody></table>
 
 <h2 id="probe-maintenance">Probe Maintenance</h2>
 
