@@ -27,6 +27,15 @@ class ise_ph(iseprobe):
 
             self.pH += temp_multiplier
 
+        if self.pH <= 0.0 or self.pH >= 14.0:
+            self.pH = -1
+            self.pOH = -1
+        if math.isnan(self.pH):
+            self.pH = -1
+            self.pOH = -1
+        if math.isinf(mV):
+            self.pH = -1
+            self.pOH = -1
         return self.pH
 
     def calibrateSingle(self, solutionpH):

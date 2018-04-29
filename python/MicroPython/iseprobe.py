@@ -31,7 +31,7 @@ ISE_CONFIG_REGISTER = 37
 ISE_TASK_REGISTER = 38
 
 ISE_TEMP_MEASURE_TIME = 750
-ISE_MV_MEASURE_TIME = 1750
+ISE_MV_MEASURE_TIME = 500
 
 ISE_DUALPOINT_CONFIG_BIT = 0
 ISE_TEMP_COMPENSATION_CONFIG_BIT = 1
@@ -53,6 +53,12 @@ class iseprobe(object):
         time.sleep(ISE_MV_MEASURE_TIME / 1000.0)
         self.mV = self._read_register(ISE_MV_REGISTER)
         self.mV = round(self.mV * 100.0) / 100.0
+
+        if math.isnan(mV):
+            mV = -1
+        if math.isinf(mV):
+            mV = -1
+
         return self.mV
 
     def measureTemp(self):

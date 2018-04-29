@@ -10,7 +10,7 @@
 </code></pre>
 <h3 id="returns">Returns</h3>
 
-<p>the measured result in mV</p>
+<p>the measured result in mV, or -1 on error</p>
 
 <h2 id="void-setprobepotential-uint32_t-probepotential"><code class="prettyprint">void setProbePotential(uint32_t probePotential)</code></h2>
 

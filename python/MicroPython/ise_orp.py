@@ -12,6 +12,12 @@ class ise_orp(iseprobe):
         self.ORP = self.mV
         self.Eh = self.mV + self.getProbePotential()
 
+        if math.isnan(self.ORP):
+            self.ORP = -1
+            self.Eh = -1
+        if math.isinf(mV):
+            self.ORP = -1
+            self.Eh = -1
         return self.mV
 
     def setProbePotential(self, potential):
