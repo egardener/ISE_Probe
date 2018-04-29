@@ -69,11 +69,12 @@ float ISE_Probe::measuremV()
   mV = _read_register(ISE_MV_REGISTER);
 
   if (isinf(mV)) {
-    mV = NAN;
+    mV = -1;
   }
   if (isnan(mV)) {
-    mV = NAN;
+    mV = -1;
   }
+
   return mV;
 }
 
@@ -130,7 +131,7 @@ void ISE_Probe::calibrateProbeLow(float solutionmV)
   useDualPoint(false);
   _write_register(ISE_SOLUTION_REGISTER, solutionmV);
   _send_command(ISE_CALIBRATE_LOW);
-  delay(ISE_MV_MEASURE_TIME + 5);
+  delay(ISE_MV_MEASURE_TIME);
   useDualPoint(dualpoint);
 }
 
@@ -149,7 +150,7 @@ void ISE_Probe::calibrateProbeHigh(float solutionmV)
   useDualPoint(false);
   _write_register(ISE_SOLUTION_REGISTER, solutionmV);
   _send_command(ISE_CALIBRATE_HIGH);
-  delay(ISE_MV_MEASURE_TIME + 5);
+  delay(ISE_MV_MEASURE_TIME);
   useDualPoint(dualpoint);
 }
 
@@ -352,14 +353,29 @@ void ISE_Probe::setI2CAddress(uint8_t i2cAddress)
   _address = i2cAddress;
 }
 
-uint32_t ISE_Probe::readEEPROM(uint8_t address)
+/*!
+   \code
+    ISE_Probe::readEEPROM(300);
+   \endcode
+
+   \brief Utility function to read data from any location in EEPROM.
+
+ */
+float ISE_Probe::readEEPROM(uint8_t address)
 {
   _write_register(ISE_SOLUTION_REGISTER, address);
   _send_command(ISE_MEMORY_READ);
   return _read_register(ISE_BUFFER_REGISTER);
 }
 
-void ISE_Probe::writeEEPROM(uint8_t address, uint32_t value)
+/*!
+   \code
+    ISE_Probe::writeEEPROM(300, 100);
+   \endcode
+
+   \brief Utility function to write any value into EEPROM.
+ */
+void ISE_Probe::writeEEPROM(uint8_t address, float value)
 {
   _write_register(ISE_SOLUTION_REGISTER, address);
   _write_register(ISE_BUFFER_REGISTER,   value);

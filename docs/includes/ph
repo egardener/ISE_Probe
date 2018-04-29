@@ -10,13 +10,11 @@
 </code></pre>
 <h3 id="returns">Returns</h3>
 
-<p>the measured result in pH</p>
-
-<p>-1 is returned if there is an error</p>
+<p>the measured result in pH, or -1 on error</p>
 
 <h2 id="void-calibratesingle-float-solutionph"><code class="prettyprint">void calibrateSingle(float solutionpH)</code></h2>
 
-<p>Calibrates the probe using a single point using a pH value.</p>
+<p>Calibrates the probe using a single point using a pH value. It takes 4.5 seconds to complete.</p>
 <pre class="highlight cpp tab-cpp"><code><span class="n">ISE_pH</span><span class="o">::</span><span class="n">calibrateSingle</span><span class="p">(</span><span class="mf">7.0</span><span class="p">);</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">pH</span><span class="o">.</span><span class="n">calibrateSingle</span><span class="p">(</span><span class="mf">7.0</span><span class="p">)</span>
 </code></pre><pre class="highlight shell tab-shell"><code>cal 7.0
@@ -25,7 +23,7 @@
 
 <h2 id="void-calibrateprobelow-float-solutionph"><code class="prettyprint">void calibrateProbeLow(float solutionpH)</code></h2>
 
-<p>Calibrates the dual-point values for the low reading, in pH, and saves them in the devices&rsquo;s EEPROM.</p>
+<p>Calibrates the dual-point values for the low reading, in pH, and saves them in the devices&rsquo;s EEPROM. It takes 4.5 seconds to complete.</p>
 <pre class="highlight cpp tab-cpp"><code><span class="n">ISE_pH</span><span class="o">::</span><span class="n">calibrateProbeLow</span><span class="p">(</span><span class="mf">4.0</span><span class="p">);</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">pH</span><span class="o">.</span><span class="n">calibrateProbeLow</span><span class="p">(</span><span class="mf">4.0</span><span class="p">)</span>
 </code></pre><pre class="highlight shell tab-shell"><code>low 4.0
@@ -38,7 +36,7 @@
 
 <h2 id="void-calibrateprobehigh-float-solutionph"><code class="prettyprint">void calibrateProbeHigh(float solutionpH)</code></h2>
 
-<p>Calibrates the dual-point values for the high reading, in pH, and saves them in the devices&rsquo;s EEPROM.</p>
+<p>Calibrates the dual-point values for the high reading, in pH, and saves them in the devices&rsquo;s EEPROM. It takes 4.5 seconds to complete. </p>
 <pre class="highlight cpp tab-cpp"><code><span class="n">ISE_pH</span><span class="o">::</span><span class="n">calibrateProbeHigh</span><span class="p">(</span><span class="mf">10.0</span><span class="p">);</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">pH</span><span class="o">.</span><span class="n">calibrateProbeHigh</span><span class="p">(</span><span class="mf">10.0</span><span class="p">)</span>
 </code></pre><pre class="highlight shell tab-shell"><code>high 10.0

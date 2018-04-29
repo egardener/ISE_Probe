@@ -65,6 +65,17 @@ float ISE_ORP::measureORP()
   ORP = mV;
   Eh  = mV + getProbePotential();
 
+  if (isinf(ORP)) {
+    mV  = -1;
+    ORP = -1;
+    Eh  = -1;
+  }
+  if (isnan(ORP)) {
+    mV  = -1;
+    ORP = -1;
+    Eh  = -1;
+  }
+
   return mV;
 }
 

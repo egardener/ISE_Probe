@@ -1,5 +1,5 @@
 {
-  "name": "ISE Probe Interface",
+  "name": "ISE_Probe_Interface",
   "keywords": "pH, hydroponics, ORP, ISE, ion, specific, electrode, aquarium, pool, chlorine",
   "description": "An Ion Specific Electrode Probe Interface. Use it to measure pH, ORP, or any other voltage based probe.",
   "repository":
@@ -16,7 +16,7 @@
       "maintainer": true
     }
   ],
-  "version": "1.0.1",
+  "version": "1.0.2",
   "frameworks": "arduino",
   "platforms": "*"
 }

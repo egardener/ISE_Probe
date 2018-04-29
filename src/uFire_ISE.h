@@ -73,7 +73,7 @@
 #define ISE_TASK_REGISTER 38               /*!< task register */
 
 #define ISE_TEMP_MEASURE_TIME 750
-#define ISE_MV_MEASURE_TIME 1750
+#define ISE_MV_MEASURE_TIME 500
 
 #define ISE_DUALPOINT_CONFIG_BIT 0         /*!< dual point config bit */
 #define ISE_TEMP_COMPENSATION_CONFIG_BIT 1 /*!< temperature compensation config bit */
@@ -98,21 +98,21 @@ public:
                                 float refHigh,
                                 float readLow,
                                 float readHigh);
-  float    getCalibrateOffset();
-  void     useTemperatureCompensation(bool b);
-  bool     usingTemperatureCompensation();
-  void     useDualPoint(bool b);
-  bool     usingDualPoint();
-  float    getCalibrateHighReference();
-  float    getCalibrateLowReference();
-  float    getCalibrateHighReading();
-  float    getCalibrateLowReading();
-  uint8_t  getVersion();
-  void     reset();
-  void     setI2CAddress(uint8_t i2cAddress);
-  void     writeEEPROM(uint8_t  address,
-                       uint32_t value);
-  uint32_t readEEPROM(uint8_t address);
+  float   getCalibrateOffset();
+  void    useTemperatureCompensation(bool b);
+  bool    usingTemperatureCompensation();
+  void    useDualPoint(bool b);
+  bool    usingDualPoint();
+  float   getCalibrateHighReference();
+  float   getCalibrateLowReference();
+  float   getCalibrateHighReading();
+  float   getCalibrateLowReading();
+  uint8_t getVersion();
+  void    reset();
+  void    setI2CAddress(uint8_t i2cAddress);
+  void    writeEEPROM(uint8_t address,
+                      float   value);
+  float   readEEPROM(uint8_t address);
 
 private:
 

@@ -44,9 +44,12 @@ const ISE_TASK_REGISTER: u8 = 38;
 const ISE_DUALPOINT_CONFIG_BIT: u8 = 0;
 const ISE_TEMP_COMPENSATION_CONFIG_BIT: u8 = 1;
 
+const ISE_TEMP_MEASURE_TIME: u64 = 750;
+const ISE_MV_MEASURE_TIME: u64 = 500;
+
 const PROBE_MV_TO_PH: f32 = 59.2;
 const TEMP_CORRECTION_FACTOR: f32 = 0.03;
-const POTENTIAL_REGISTER_ADDRESS:u8 = 100;
+const POTENTIAL_REGISTER_ADDRESS: u8 = 100;
 
 pub struct IseProbe {
     dev: Box<LinuxI2CDevice>,
@@ -61,7 +64,7 @@ impl IseProbe {
     /// let mut mv = ufire_ise::IseProbe::new("/dev/i2c-3", 0x3f).unwrap();
     /// ```
     pub fn new(filename: &'static str, address: u16) -> Result<Self, Box<LinuxI2CError>> {
-        let dev = LinuxI2CDevice::new(filename, address)?;;
+        let dev = LinuxI2CDevice::new(filename, address)?;
         Ok(IseProbe { dev: Box::new(dev) })
     }
 
@@ -77,7 +80,7 @@ impl IseProbe {
 
         self.dev
             .smbus_write_byte_data(ISE_TASK_REGISTER, ISE_MEASURE_MV)?;
-        thread::sleep(Duration::from_millis(1750));
+        thread::sleep(Duration::from_millis(ISE_MV_MEASURE_TIME));
         mv = self._read_register(ISE_MV_REGISTER)?;
 
         if mv.is_nan() {
@@ -103,7 +106,7 @@ impl IseProbe {
 
         self.dev
             .smbus_write_byte_data(ISE_TASK_REGISTER, ISE_MEASURE_MV)?;
-        thread::sleep(Duration::from_millis(1750));
+        thread::sleep(Duration::from_millis(ISE_MV_MEASURE_TIME));
         ph = self._read_register(ISE_MV_REGISTER)?;
 
         ph = f32::abs(7.0 - (ph / PROBE_MV_TO_PH));
@@ -128,15 +131,15 @@ impl IseProbe {
         }
 
         if ph <= 0.0 || ph > 14.0 {
-            ph = f32::NAN;
+            ph = -1.0;
         }
 
         if ph.is_nan() {
-            ph = f32::NAN;
+            ph = -1.0;
         }
 
         if ph.is_infinite() {
-            ph = f32::NAN;
+            ph = -1.0;
         }
 
         Ok(ph)
@@ -149,7 +152,7 @@ impl IseProbe {
     /// let mut mv = ufire_ise::IseProbe::new("/dev/i2c-3", 0x3f).unwrap();
     /// assert_eq!(0.0, mv.ph_to_mv(7.0).unwrap());
     /// ```
-    pub fn ph_to_mv(&mut self, ph:f32) -> Result<(f32), Box<LinuxI2CError>> {
+    pub fn ph_to_mv(&mut self, ph: f32) -> Result<(f32), Box<LinuxI2CError>> {
         Ok((7.0 - ph) * PROBE_MV_TO_PH)
     }
 
@@ -163,7 +166,7 @@ impl IseProbe {
     pub fn measure_temp(&mut self) -> Result<(f32), Box<LinuxI2CError>> {
         self.dev
             .smbus_write_byte_data(ISE_TASK_REGISTER, ISE_MEASURE_TEMP)?;
-        thread::sleep(Duration::from_millis(750));
+        thread::sleep(Duration::from_millis(ISE_TEMP_MEASURE_TIME));
 
         Ok(self._read_register(ISE_TEMP_REGISTER)?)
     }
@@ -179,7 +182,7 @@ impl IseProbe {
         self._write_register(ISE_SOLUTION_REGISTER, solution_mv)?;
         self.dev
             .smbus_write_byte_data(ISE_TASK_REGISTER, ISE_CALIBRATE_SINGLE)?;
-        thread::sleep(Duration::from_millis(1750));
+        thread::sleep(Duration::from_millis(ISE_MV_MEASURE_TIME));
         Ok(())
     }
 
@@ -195,7 +198,7 @@ impl IseProbe {
         self._write_register(ISE_SOLUTION_REGISTER, solution_mv)?;
         self.dev
             .smbus_write_byte_data(ISE_TASK_REGISTER, ISE_CALIBRATE_LOW)?;
-        thread::sleep(Duration::from_millis(1750));
+        thread::sleep(Duration::from_millis(ISE_MV_MEASURE_TIME));
         Ok(())
     }
 
@@ -211,7 +214,7 @@ impl IseProbe {
         self._write_register(ISE_SOLUTION_REGISTER, solution_mv)?;
         self.dev
             .smbus_write_byte_data(ISE_TASK_REGISTER, ISE_CALIBRATE_HIGH)?;
-        thread::sleep(Duration::from_millis(1750));
+        thread::sleep(Duration::from_millis(ISE_MV_MEASURE_TIME));
         Ok(())
     }
 
@@ -232,7 +235,7 @@ impl IseProbe {
     ) -> Result<(), Box<LinuxI2CError>> {
         self._write_register(ISE_CALIBRATE_REFLOW_REGISTER, ref_low)?;
         self._write_register(ISE_CALIBRATE_REFHIGH_REGISTER, ref_high)?;
-	self._write_register(ISE_CALIBRATE_READLOW_REGISTER, read_low)?;
+        self._write_register(ISE_CALIBRATE_READLOW_REGISTER, read_low)?;
         self._write_register(ISE_CALIBRATE_READHIGH_REGISTER, read_high)?;
 
         Ok(())
@@ -307,7 +310,7 @@ impl IseProbe {
     pub fn use_temperature_compensation(&mut self, b: bool) -> Result<(), Box<LinuxI2CError>> {
         self._change_register(ISE_CONFIG_REGISTER)?;
         let mut config: u8 = self.dev.smbus_read_byte()?;
-	thread::sleep(Duration::from_millis(10));
+        thread::sleep(Duration::from_millis(10));
         if b {
             config |= 1 << ISE_TEMP_COMPENSATION_CONFIG_BIT;
         } else {
@@ -329,7 +332,7 @@ impl IseProbe {
     pub fn use_dual_point(&mut self, b: bool) -> Result<(), Box<LinuxI2CError>> {
         self._change_register(ISE_CONFIG_REGISTER)?;
         let mut config: u8 = self.dev.smbus_read_byte()?;
-	thread::sleep(Duration::from_millis(10));
+        thread::sleep(Duration::from_millis(10));
         if b {
             config |= 1 << ISE_DUALPOINT_CONFIG_BIT;
         } else {
@@ -451,30 +454,30 @@ impl IseProbe {
         Ok(())
     }
 
-   /// Returns the saved probe potential from EEPROM.
-   ///
-   /// # Example
-   /// ```
-   /// let mut mv = ufire_ise::IseProbe::new("/dev/i2c-3", 0x3f).unwrap();
-   /// mv.set_probe_potential(245.0).unwrap();
-   /// assert_eq!(245.0, mv.get_probe_potential().unwrap());
-   /// ```
-   pub fn get_probe_potential(&mut self) -> Result<(f32), Box<LinuxI2CError>>{
+    /// Returns the saved probe potential from EEPROM.
+    ///
+    /// # Example
+    /// ```
+    /// let mut mv = ufire_ise::IseProbe::new("/dev/i2c-3", 0x3f).unwrap();
+    /// mv.set_probe_potential(245.0).unwrap();
+    /// assert_eq!(245.0, mv.get_probe_potential().unwrap());
+    /// ```
+    pub fn get_probe_potential(&mut self) -> Result<(f32), Box<LinuxI2CError>> {
         Ok(self.read_eeprom(POTENTIAL_REGISTER_ADDRESS)?)
-  }
+    }
 
-   /// Saves probe potential in EEPROM.
-   ///
-   /// # Example
-   /// ```
-   /// let mut mv = ufire_ise::IseProbe::new("/dev/i2c-3", 0x3f).unwrap();
-   /// mv.set_probe_potential(245.0).unwrap();
-   /// assert_eq!(245.0, mv.get_probe_potential().unwrap());
-   /// ```
-   pub fn set_probe_potential(&mut self, potential:f32) -> Result<(), Box<LinuxI2CError>>{
+    /// Saves probe potential in EEPROM.
+    ///
+    /// # Example
+    /// ```
+    /// let mut mv = ufire_ise::IseProbe::new("/dev/i2c-3", 0x3f).unwrap();
+    /// mv.set_probe_potential(245.0).unwrap();
+    /// assert_eq!(245.0, mv.get_probe_potential().unwrap());
+    /// ```
+    pub fn set_probe_potential(&mut self, potential: f32) -> Result<(), Box<LinuxI2CError>> {
         self.write_eeprom(POTENTIAL_REGISTER_ADDRESS, potential)?;
-	Ok(())
-  }
+        Ok(())
+    }
 
     pub fn _write_register(&mut self, register: u8, f_val: f32) -> Result<(), Box<LinuxI2CError>> {
         unsafe {
@@ -496,11 +499,11 @@ impl IseProbe {
         let mut buf: [u8; 4] = [0; 4];
         self._change_register(register)?;
         buf[0] = self.dev.smbus_read_byte()?;
-	thread::sleep(Duration::from_millis(10));
+        thread::sleep(Duration::from_millis(10));
         buf[1] = self.dev.smbus_read_byte()?;
-	thread::sleep(Duration::from_millis(10));
+        thread::sleep(Duration::from_millis(10));
         buf[2] = self.dev.smbus_read_byte()?;
-	thread::sleep(Duration::from_millis(10));
+        thread::sleep(Duration::from_millis(10));
         buf[3] = self.dev.smbus_read_byte()?;
         thread::sleep(Duration::from_millis(10));
         Ok(LittleEndian::read_f32(&buf))
