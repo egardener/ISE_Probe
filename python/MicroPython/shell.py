@@ -2,6 +2,7 @@ import cmd
 
 from iseprobe import iseprobe
 
+# connect board SCL to pin 5, SDA to pin 4, but any pins can be used. -1 indicates software I2C.
 ise = iseprobe(0x3f, -1, scl=5, sda=4)
 
 
