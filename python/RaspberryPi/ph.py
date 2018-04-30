@@ -1,5 +1,6 @@
 from ise_ph import ise_ph
 
+# the passed parameter 3 indicates the third (/dev/i2c-3) I2C device
 ph = ise_ph(0x3f, 3)
 
 ph.measurepH()
