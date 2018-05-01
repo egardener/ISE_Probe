@@ -1,0 +1,1 @@
+/home/justin/Development/ise-class/lib/uFire_ISE/rust/target/package/ufire_ise-0.9.1/target/debug/ufire_ise_bin: /home/justin/Development/ise-class/lib/uFire_ISE/rust/target/package/ufire_ise-0.9.1/src/main.rs /home/justin/Development/ise-class/lib/uFire_ISE/rust/target/package/ufire_ise-0.9.1/src/lib.rs
