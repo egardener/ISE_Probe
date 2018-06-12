@@ -45,8 +45,17 @@ public:
 
   float pH;
   float pOH;
-  ISE_pH(uint8_t i2c_address);
-  ISE_pH();
+  ISE_pH() {}
+
+  #ifdef ESP32
+  ISE_pH(uint8_t sda,
+         uint8_t scl,
+         uint8_t i2c_address) : ISE_Probe(sda, scl, i2c_address) {}
+
+  ISE_pH(uint8_t sda,
+         uint8_t scl) : ISE_Probe(sda, scl) {}
+
+  #endif // ifndef ESP32
   float measurepH();
   float pHtomV(float pH);
   void  calibrateSingle(float solutionpH);

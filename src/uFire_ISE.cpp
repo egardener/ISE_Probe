@@ -37,17 +37,33 @@
 /*!
    \brief Class constructor
  */
-ISE_Probe::ISE_Probe()
-{
-  _address = ISE_PROBE_I2C;
-  Wire.begin();
-}
 
 ISE_Probe::ISE_Probe(uint8_t i2c_address)
 {
   _address = i2c_address;
   Wire.begin();
 }
+
+ISE_Probe::ISE_Probe()
+{
+  _address = ISE_PROBE_I2C;
+  Wire.begin();
+}
+
+#ifdef ESP32
+ISE_Probe::ISE_Probe(uint8_t sda, uint8_t scl, uint8_t i2c_address)
+{
+  _address = i2c_address;
+  Wire.begin(sda, scl, 100000);
+}
+
+ISE_Probe::ISE_Probe(uint8_t sda, uint8_t scl)
+{
+  _address = ISE_PROBE_I2C;
+  Wire.begin(sda, scl, 100000);
+}
+
+#endif // ifndef ESP32
 
 /*!
    \brief Class destructor

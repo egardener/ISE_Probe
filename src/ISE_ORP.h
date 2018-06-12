@@ -44,8 +44,17 @@ public:
 
   float ORP;
   float Eh;
-  ISE_ORP(uint8_t i2c_address);
-  ISE_ORP();
+  ISE_ORP() {}
+
+  #ifdef ESP32
+  ISE_ORP(uint8_t sda,
+          uint8_t scl,
+          uint8_t i2c_address) : ISE_Probe(sda, scl, i2c_address) {}
+
+  ISE_ORP(uint8_t sda,
+          uint8_t scl) : ISE_Probe(sda, scl) {}
+
+  #endif // ifndef ESP32
   ~ISE_ORP();
   float    measureORP();
   void     setProbePotential(uint32_t potential);

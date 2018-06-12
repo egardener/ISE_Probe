@@ -33,18 +33,6 @@
 
 #include "ISE_ORP.h"
 
-/*!
-   \brief Class constructor
- */
-ISE_ORP::ISE_ORP()
-{
-  _address = ISE_PROBE_I2C;
-}
-
-ISE_ORP::ISE_ORP(uint8_t i2c_address)
-{
-  _address = i2c_address;
-}
 
 /*!
    \brief Class destructor

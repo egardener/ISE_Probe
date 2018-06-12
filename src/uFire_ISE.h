@@ -86,14 +86,21 @@ public:
   float tempC; /*!< Temperature in C */
   float tempF; /*!< Temperature in F */
   float mV;    /*!< mV of probe */
-  ISE_Probe();
   ISE_Probe(uint8_t i2c_address);
+  ISE_Probe();
+  #ifdef ESP32
+  ISE_Probe(uint8_t sda,
+            uint8_t scl,
+            uint8_t i2c_address);
+  ISE_Probe(uint8_t sda,
+            uint8_t scl);
+  #endif // ifndef ESP32
   ~ISE_Probe();
   float measuremV();
   float measureTemp();
-  void  calibrateSingle(float solutionpH);
-  void  calibrateProbeLow(float solutionpH);
-  void  calibrateProbeHigh(float solutionpH);
+  void  calibrateSingle(float solutionmV);
+  void  calibrateProbeLow(float solutionmV);
+  void  calibrateProbeHigh(float solutionmV);
   void  setDualPointCalibration(float refLow,
                                 float refHigh,
                                 float readLow,

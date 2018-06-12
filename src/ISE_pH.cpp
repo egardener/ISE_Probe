@@ -33,19 +33,6 @@
 
 #include "ISE_pH.h"
 
-/*!
-   \brief Class constructor
- */
-ISE_pH::ISE_pH()
-{
-  _address = ISE_PROBE_I2C;
-}
-
-ISE_pH::ISE_pH(uint8_t i2c_address)
-{
-  _address = i2c_address;
-}
-
 float ISE_pH::measurepH()
 {
   // Turn mV into pH
