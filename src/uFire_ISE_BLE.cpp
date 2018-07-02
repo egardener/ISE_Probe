@@ -1,5 +1,7 @@
 #ifdef ESP32
-#include "uFire_ISE_BLE.h"
+#if __has_include("BLEDevice.h")
+
+# include "uFire_ISE_BLE.h"
 
 uFire_ISE_BLE::uFire_ISE_BLE() {}
 
@@ -142,4 +144,5 @@ void uFire_ISE_BLE::measureTemp() {
   ptemp_Characteristic->notify();
 }
 
+#endif // if __has_include("BLEDevice.h")
 #endif // ifdef ESP32

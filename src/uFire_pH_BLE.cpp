@@ -1,5 +1,7 @@
 #ifdef ESP32
-#include "uFire_pH_BLE.h"
+#if __has_include("BLEDevice.h")
+
+# include "uFire_pH_BLE.h"
 
 void uFire_pH_BLE::startBLE() {
   // setup the server
@@ -140,4 +142,5 @@ void uFire_pH_BLE::measureTemp() {
   ptemp_Characteristic->notify();
 }
 
+#endif // if __has_include("BLEDevice.h")
 #endif // ifdef ESP32
