@@ -36,7 +36,15 @@
 float ISE_pH::measurepH()
 {
   // Turn mV into pH
-  pH  = fabs(7.0 - (measuremV() / PROBE_MV_TO_PH));
+  float mv = measuremV();
+
+  if (mv == -1)
+  {
+    pH  = -1;
+    pOH = -1;
+    return -1;
+  }
+  pH  = fabs(7.0 - (mv / PROBE_MV_TO_PH));
   pOH = fabs(pH - 14);
 
   // Determine the temperature correction
