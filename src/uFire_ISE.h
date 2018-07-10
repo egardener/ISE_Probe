@@ -35,7 +35,6 @@
 #ifndef ISEPROBE_H
 #define ISEPROBE_H
 
-#include <Arduino.h>
 #include <math.h>
 
 #if defined(PARTICLE)

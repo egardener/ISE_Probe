@@ -46,6 +46,8 @@ public:
   float Eh;
   ISE_ORP() {}
 
+  ISE_ORP(uint8_t i2c_address) : ISE_Probe(i2c_address) {}
+
   #ifdef ESP32
   ISE_ORP(uint8_t sda,
           uint8_t scl,

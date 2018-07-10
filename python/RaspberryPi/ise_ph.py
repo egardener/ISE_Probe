@@ -10,6 +10,11 @@ class ise_ph(iseprobe):
 
     def measurepH(self):
         self.measuremV()
+        if self.mV == -1:
+            self.pH = -1
+            self.pOH = -1
+            return -1
+
         self.pH = abs(7.0 - (self.mV / PROBE_MV_TO_PH))
         self.pOH = abs(self.pH - 14)
 
