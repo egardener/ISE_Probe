@@ -3,7 +3,16 @@
 
 # include "uFire_ISE_BLE.h"
 
-uFire_ISE_BLE::uFire_ISE_BLE() {}
+bool uFire_ISE_BLE::connected() {
+  if (pServer->getConnectedCount() > 0)
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
 
 void uFire_ISE_BLE::startBLE() {
   // setup the server

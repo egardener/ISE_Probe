@@ -3,12 +3,26 @@
 
 # include "uFire_pH_BLE.h"
 
+bool uFire_pH_BLE::connected() {
+  if (pServer->getConnectedCount() > 0)
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
+
 void uFire_pH_BLE::startBLE() {
   // setup the server
   BLEDevice::init("uFire pH");
   pServer = BLEDevice::createServer();
   pServer->setCallbacks(new ServerCallback());
   pService = pServer->createService(BLEUUID(UFIRE_ISE_UUID), 50);
+
+  BLEDevice::setEncryptionLevel(ESP_BLE_SEC_ENCRYPT);
+  BLEDevice::setSecurityCallbacks(new MySecurity());
 
   // setup the mV characteristic
   pmV_Characteristic = pService->createCharacteristic(

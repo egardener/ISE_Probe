@@ -4,7 +4,7 @@
    questions@ufire.co to get in touch with someone
  */
 
-#include "uFire_ISE.h"
+#include <uFire_ISE.h>
 
 ISE_Probe mv;
 

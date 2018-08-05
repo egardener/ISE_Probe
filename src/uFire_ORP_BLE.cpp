@@ -3,6 +3,17 @@
 
 # include "uFire_ORP_BLE.h"
 
+bool uFire_ORP_BLE::connected() {
+  if (pServer->getConnectedCount() > 0)
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
+
 void uFire_ORP_BLE::startBLE() {
   // setup the server
   BLEDevice::init("uFire ORP");

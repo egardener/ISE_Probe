@@ -26,12 +26,10 @@
 class ServerCallback : public BLEServerCallbacks {
 public:
 
-  void onConnect(BLEServer *pServer) {
-    Serial.println("connected");
-  }
+  void onConnect(BLEServer *pServer) {}
 
   void onDisconnect(BLEServer *pServer) {
-    Serial.println("disconnected");
+    ESP.restart();
   }
 };
 
@@ -152,7 +150,7 @@ class versionCallback : public BLECharacteristicCallbacks, ISE_Probe {
   }
 };
 
-class uFire_ISE_BLE : public ISE_Probe, ServerCallback {
+class uFire_ISE_BLE : public ISE_Probe {
 public:
 
   bool connected();

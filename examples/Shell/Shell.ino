@@ -27,10 +27,13 @@
 
    Change the I2C address
     i2c 30
+
+   Reset device configuration
+    reset
  */
 
-#include "uFire_ISE.h"
-#include "ISE_pH.h"
+#include <uFire_ISE.h>
+#include <ISE_pH.h>
 
 ISE_Probe mV;
 ISE_pH    pH;
@@ -48,7 +51,7 @@ void config() {
   Serial.print("  version: 0x"); Serial.println(mV.getVersion(), HEX);
 }
 
-void reset() {
+void reset_config() {
   mV.reset();
   config();
 }
@@ -149,7 +152,7 @@ void write() {
 
 void cmd_run() {
   if ((cmd == "conf") || (cmd == "config") || (cmd == "c")) config();
-  if ((cmd == "reset") || (cmd == "r")) reset();
+  if ((cmd == "reset") || (cmd == "r")) reset_config();
   if ((cmd == "temp") || (cmd == "t")) temperature();
   if ((cmd == "calibrate") || (cmd == "cal")) calibrate();
   if (cmd == "mv") mv();
