@@ -38,7 +38,7 @@ class ise_ph(iseprobe):
         if math.isnan(self.pH):
             self.pH = -1
             self.pOH = -1
-        if math.isinf(mV):
+        if math.isinf(self.mV):
             self.pH = -1
             self.pOH = -1
 

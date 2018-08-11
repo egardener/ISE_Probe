@@ -1,4 +1,5 @@
 from iseprobe import iseprobe
+import math
 
 PROBE_MV_TO_PH = 59.2
 TEMP_CORRECTION_FACTOR = 0.03
@@ -38,7 +39,7 @@ class ise_ph(iseprobe):
         if math.isnan(self.pH):
             self.pH = -1
             self.pOH = -1
-        if math.isinf(mV):
+        if math.isinf(self.mV):
             self.pH = -1
             self.pOH = -1
         return self.pH

@@ -2,7 +2,7 @@ import cmd
 
 from iseprobe import iseprobe
 
-ise = iseprobe(0x4f, 3)
+ise = iseprobe(0x3f, 3)
 
 
 class iseshell(cmd.Cmd):

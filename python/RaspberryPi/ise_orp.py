@@ -1,5 +1,5 @@
 from iseprobe import iseprobe
-
+import math
 POTENTIAL_REGISTER_ADDRESS = 100
 
 
@@ -15,7 +15,7 @@ class ise_orp(iseprobe):
         if math.isnan(self.ORP):
             self.ORP = -1
             self.Eh = -1
-        if math.isinf(mV):
+        if math.isinf(self.mV):
             self.ORP = -1
             self.Eh = -1
 

@@ -52,10 +52,10 @@ class iseprobe(object):
         self.mV = self._read_register(ISE_MV_REGISTER)
         self.mV = round(self.mV * 100.0) / 100.0
 
-        if math.isnan(mV):
-            mV = -1
-        if math.isinf(mV):
-            mV = -1
+        if math.isnan(self.mV):
+            self.mV = -1
+        if math.isinf(self.mV):
+            self.mV = -1
 
         return self.mV
 
