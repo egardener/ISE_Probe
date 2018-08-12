@@ -1,4 +1,4 @@
-### pH Probe Interface for Micropython
+### ISE Probe Interface for Micropython
 
 The examples only differ from the [documentation](http://ufire.co/ISE_Probe/) in the class initialization; `ph = phprobe(-1, 5, 4)` creates a new I2C instance using SCL pin 5 and SDA pin 4, -1 indicates software implementation of I2C.
 
@@ -11,7 +11,7 @@ To get started with the basic example:
 - `pip install adafruit-ampy`
 - `esptool.py --port [/dev/ttyUSB0|COM1] erase_flash`
 - `esptool.py --chip esp32 --port [/dev/ttyUSB0|COM1] write_flash -z 0x1000 [firmware file]`
-- `git clone https://github.com/u-fire/ISE_Probe.git`
+- `git clone https://github.com/u-fire/ISE_Probe.git --depth=1`
 - `cd ISE_Probe/python/MicroPython`
 - `ampy --port [/dev/ttyUSB0|COM1] put iseprobe.py`
 - `ampy --port [/dev/ttyUSB0|COM1] put basic.py`

@@ -21,9 +21,6 @@ void uFire_pH_BLE::startBLE() {
   pServer->setCallbacks(new ServerCallback());
   pService = pServer->createService(BLEUUID(UFIRE_ISE_UUID), 50);
 
-  BLEDevice::setEncryptionLevel(ESP_BLE_SEC_ENCRYPT);
-  BLEDevice::setSecurityCallbacks(new MySecurity());
-
   // setup the mV characteristic
   pmV_Characteristic = pService->createCharacteristic(
     PH_UUID,

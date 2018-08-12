@@ -26,10 +26,12 @@
 class ServerCallback : public BLEServerCallbacks {
 public:
 
-  void onConnect(BLEServer *pServer) {}
+  void onConnect(BLEServer *pServer) {
+    Serial.println("connected");
+  }
 
   void onDisconnect(BLEServer *pServer) {
-    ESP.restart();
+    Serial.println("disconnected");
   }
 };
 
@@ -150,11 +152,17 @@ class versionCallback : public BLECharacteristicCallbacks, ISE_Probe {
   }
 };
 
-class uFire_ISE_BLE : public ISE_Probe {
+class uFire_ISE_BLE : public ISE_Probe, ServerCallback {
 public:
 
-  bool connected();
+  uFire_ISE_BLE(uint8_t sda,
+                uint8_t scl) : ISE_Probe(sda, scl) {}
+
+  uFire_ISE_BLE(uint8_t sda,
+                uint8_t scl, uint8_t i2c_address) : ISE_Probe(sda, scl, i2c_address) {}
+
   uFire_ISE_BLE();
+  bool connected();
   void startBLE();
   void measuremV();
   void measureTemp();
