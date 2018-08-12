@@ -6,7 +6,7 @@
    1. This example is compatible with ISE Probe Interface hardware board version 1a.
    2. This is for an ESP32 board.
    3. The 'ESP32 BLE Arduino' library needs to be installed.
-   4. Connect the EC_Salinity Probe to your ESP32 3.3/5v to VCC, GND to GND, SDA to 19 and SCL to 23
+   4. Connect the ISE Probe Interface to your ESP32 3.3/5v to VCC, GND to GND, SDA to 19 and SCL to 23
    5. After uploading this sketch, you can see the results by going to https://ufire.co/uFire_BLE/ in the Chrome browser
  */
 
