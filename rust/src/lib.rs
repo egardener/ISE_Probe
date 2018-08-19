@@ -171,6 +171,19 @@ impl IseProbe {
         Ok(self._read_register(ISE_TEMP_REGISTER)?)
     }
 
+    /// Sets the temperature used by the device.
+    ///
+    /// # Example
+    /// ```
+    /// let mut ec = ufire_ise::IseProbe::new("/dev/i2c-3", 0x3c).unwrap();
+    /// ec.set_temp(20.2);
+    /// ```
+    pub fn set_temp(&mut self, temp_c: f32) -> Result<(), Box<LinuxI2CError>> {
+        self._write_register(ISE_TEMP_REGISTER, temp_c)?;
+
+        Ok(())
+    }
+
     /// Calibrates the probe using a single point using a mV value.
     ///
     /// # Example

@@ -66,6 +66,10 @@ class iseprobe(object):
         self.tempF = ((self.tempC * 9) / 5) + 32
         return self.tempC
 
+    def setTemp(self, temp_C):
+        self._write_register(ISE_TEMP_REGISTER, temp_C)
+        self.tempF = ((self.tempC * 9) / 5) + 32
+
     def calibrateSingle(self, solutionmV):
         dualpoint = self.usingDualPoint()
 

@@ -23,8 +23,11 @@ class iseshell(cmd.Cmd):
         """reset all saved values\nparameters: none"""
         ise.reset()
 
-    def do_temp(self, a):
+    def do_temp(self, temp_C):
         """measures the temperature\nparameters: none"""
+        if temp_C:
+            ise.setTemp(float(temp_C)
+
         ise.measureTemp()
         print("C/F: " + str(ise.tempC) + " / " + str(ise.tempF))
 

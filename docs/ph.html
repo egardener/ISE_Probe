@@ -7,7 +7,7 @@
     <meta name="description" content="">
     
     
-    <link rel="preload" href="/ISE_Probe/assets/css/0.styles.2c196f61.css" as="style"><link rel="preload" href="/ISE_Probe/assets/js/app.c8384b2c.js" as="script"><link rel="preload" href="/ISE_Probe/assets/js/13.5e0e63df.js" as="script"><link rel="prefetch" href="/ISE_Probe/assets/js/6.c19be400.js"><link rel="prefetch" href="/ISE_Probe/assets/js/2.c736891e.js"><link rel="prefetch" href="/ISE_Probe/assets/js/3.12004e6a.js"><link rel="prefetch" href="/ISE_Probe/assets/js/4.f639e4d5.js"><link rel="prefetch" href="/ISE_Probe/assets/js/5.ea7c001f.js"><link rel="prefetch" href="/ISE_Probe/assets/js/7.f5432d3a.js"><link rel="prefetch" href="/ISE_Probe/assets/js/8.9b2fb354.js"><link rel="prefetch" href="/ISE_Probe/assets/js/9.a4fb02de.js"><link rel="prefetch" href="/ISE_Probe/assets/js/10.3da9efd1.js"><link rel="prefetch" href="/ISE_Probe/assets/js/11.55ab4da4.js"><link rel="prefetch" href="/ISE_Probe/assets/js/12.fbb9fdec.js">
+    <link rel="preload" href="/ISE_Probe/assets/css/0.styles.2c196f61.css" as="style"><link rel="preload" href="/ISE_Probe/assets/js/app.4d11ad16.js" as="script"><link rel="preload" href="/ISE_Probe/assets/js/13.01db3786.js" as="script"><link rel="prefetch" href="/ISE_Probe/assets/js/6.c19be400.js"><link rel="prefetch" href="/ISE_Probe/assets/js/2.c736891e.js"><link rel="prefetch" href="/ISE_Probe/assets/js/3.12004e6a.js"><link rel="prefetch" href="/ISE_Probe/assets/js/4.53dbee96.js"><link rel="prefetch" href="/ISE_Probe/assets/js/5.ea7c001f.js"><link rel="prefetch" href="/ISE_Probe/assets/js/7.f5432d3a.js"><link rel="prefetch" href="/ISE_Probe/assets/js/8.9b2fb354.js"><link rel="prefetch" href="/ISE_Probe/assets/js/9.a4fb02de.js"><link rel="prefetch" href="/ISE_Probe/assets/js/10.3da9efd1.js"><link rel="prefetch" href="/ISE_Probe/assets/js/11.55ab4da4.js"><link rel="prefetch" href="/ISE_Probe/assets/js/12.fbb9fdec.js">
     <link rel="stylesheet" href="/ISE_Probe/assets/css/0.styles.2c196f61.css">
   </head>
   <body>
@@ -16,6 +16,10 @@
 ISE_pH pH<span class="token punctuation">;</span>
 
 pH<span class="token punctuation">.</span><span class="token function">measurepH</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div></div><div><!----></div></div> <p>To pass the temperature to use:</p> <div class="code-toggle"><ul class="code-language-switcher"><li><a class="active">C++</a></li><li><a>Python</a></li></ul> <div><div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;ISE_pH.h&gt;</span></span>
+ISE_pH pH<span class="token punctuation">;</span>
+
+pH<span class="token punctuation">.</span><span class="token function">measurepH</span><span class="token punctuation">(</span><span class="token number">20.2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre></div></div><div><!----></div></div> <h4>Related</h4> <ul><li>measuremV</li> <li>useTemperatureCompensation</li> <li>usingTemperatureCompensation</li></ul> <h4>Returns</h4> <p>the measured result in pH, or -1 on error</p></div> <div class="right"></div></div> <h2 id="calibratesingle"><a href="#calibratesingle" aria-hidden="true" class="header-anchor">#</a> calibrateSingle</h2> <div class="split"><div class="left"><p>Calibrates the probe using a single point pH value.</p> <h4>Parameters</h4> <div><ul><li><code>solution_pH</code> the pH of the calibration solution</li></ul></div> <h4>Usage</h4> <div class="code-toggle"><ul class="code-language-switcher"><li><a class="active">C++</a></li><li><a>Python</a></li><li><a>Shell</a></li></ul> <div><div class="language-cpp extra-class"><pre class="language-cpp"><code>ISE_pH<span class="token operator">::</span><span class="token function">calibrateSingle</span><span class="token punctuation">(</span><span class="token number">7.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre></div></div><div><!----></div><div><!----></div></div> <h4>Example</h4> <div class="code-toggle"><ul class="code-language-switcher"><li><a class="active">C++</a></li><li><a>Python</a></li></ul> <div><div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;ISE_pH.h&gt;</span></span>
 ISE_pH pH<span class="token punctuation">;</span>
@@ -38,6 +42,6 @@ pH<span class="token punctuation">.</span><span class="token function">calibrate
           ORP Measurement
         </a> →
       </span></p></div> </div></div></div>
-    <script src="/ISE_Probe/assets/js/13.5e0e63df.js" defer></script><script src="/ISE_Probe/assets/js/app.c8384b2c.js" defer></script>
+    <script src="/ISE_Probe/assets/js/13.01db3786.js" defer></script><script src="/ISE_Probe/assets/js/app.4d11ad16.js" defer></script>
   </body>
 </html>

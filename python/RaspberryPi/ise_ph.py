@@ -9,7 +9,7 @@ class ise_ph(iseprobe):
     pH = 0
     pOH = 0
 
-    def measurepH(self):
+    def measurepH(self, temp_C):
         self.measuremV()
         if self.mV == -1:
             self.pH = -1
@@ -20,7 +20,10 @@ class ise_ph(iseprobe):
         self.pOH = abs(self.pH - 14)
 
         if self.usingTemperatureCompensation() is True:
-            self.measureTemp()
+            if not temp_C:
+                self.measureTemp()
+            else:
+                self.tempC = temp_C
 
             distance_from_7 = abs(7 - round(self.pH))
             distance_from_25 = floor(abs(25 - round(temp)) / 10)

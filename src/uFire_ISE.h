@@ -107,6 +107,7 @@ public:
   float   getCalibrateOffset();
   void    useTemperatureCompensation(bool b);
   bool    usingTemperatureCompensation();
+  void    setTemp(float temp_C);
   void    useDualPoint(bool b);
   bool    usingDualPoint();
   float   getCalibrateHighReference();

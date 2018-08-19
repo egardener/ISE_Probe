@@ -113,6 +113,21 @@ float ISE_Probe::measureTemp()
 }
 
 /*!
+    \code
+        ISE_Probe::setTemp(20.2);
+    \endcode
+
+   \brief Sets the temperature used by the device.
+   \post #tempC and #tempF are updated
+ */
+void ISE_Probe::setTemp(float temp_C)
+{
+  _write_register(ISE_TEMP_REGISTER, temp_C);
+  tempC = temp_C;
+  tempF = ((tempC * 9) / 5) + 32;
+}
+
+/*!
    \code
     ISE_Probe::calibrateSingle(100);
    \endcode

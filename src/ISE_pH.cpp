@@ -85,6 +85,58 @@ float ISE_pH::measurepH()
   return pH;
 }
 
+float ISE_pH::measurepH(float temp_C)
+{
+  // Turn mV into pH
+  float mv = measuremV();
+
+  if (mv == -1)
+  {
+    pH  = -1;
+    pOH = -1;
+    return -1;
+  }
+  pH  = fabs(7.0 - (mv / PROBE_MV_TO_PH));
+  pOH = fabs(pH - 14);
+
+  // Determine the temperature correction
+  if (usingTemperatureCompensation())
+  {
+    float   temp             = temp_C;
+    uint8_t distance_from_7  = abs(7 - round(pH));
+    uint8_t distance_from_25 = floor(abs(25 - round(temp)) / 10);
+    float   temp_multiplier  = (distance_from_25 * distance_from_7) * TEMP_CORRECTION_FACTOR;
+
+    if ((pH >= 8.0) && (temp >= 35))
+    {
+      // negative
+      temp_multiplier *= -1;
+    }
+
+    if ((pH <= 6.0) && (temp <= 15))
+    {
+      // negative
+      temp_multiplier *= -1;
+    }
+
+    pH += temp_multiplier;
+  }
+
+  if ((pH <= 0.0) || (pH > 14.0)) {
+    pH  = -1;
+    pOH = -1;
+  }
+  if (isinf(pH)) {
+    pH  = -1;
+    pOH = -1;
+  }
+  if (isnan(pH)) {
+    pH  = -1;
+    pOH = -1;
+  }
+  return pH;
+}
+
 float ISE_pH::pHtomV(float pH)
 {
   return (7 - pH) * PROBE_MV_TO_PH;

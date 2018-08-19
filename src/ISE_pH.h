@@ -59,6 +59,7 @@ public:
 
   #endif // ifndef ESP32
   float measurepH();
+  float measurepH(float temp_C);
   float pHtomV(float pH);
   void  calibrateSingle(float solutionpH);
   void  calibrateProbeLow(float solutionpH);
