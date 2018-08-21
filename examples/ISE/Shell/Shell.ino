@@ -4,6 +4,9 @@
    questions@ufire.co to get in touch with someone
 
    This allows you to run various functions on a command-line like interface.
+
+   Set your Serial Monitor to Newline or Both NL & CR.
+   
    For more information and documentation, visit ufire.co
 
    Display config information
@@ -11,11 +14,6 @@
 
    Basic usage:
     mv
-    ph
-
-   Enable temperature compensation
-    tc 1
-    temp
 
    Single Point Calibration
     cal 200
@@ -28,15 +26,16 @@
    Change the I2C address
     i2c 30
 
+   Take a temperature reading
+    temp
+    
    Reset device configuration
     reset
  */
 
 #include <uFire_ISE.h>
-#include <ISE_pH.h>
 
 ISE_Probe mV;
-ISE_pH    pH;
 String    buffer, cmd, p1, p2;
 
 void config() {
@@ -57,7 +56,11 @@ void reset_config() {
 }
 
 void temperature() {
-  mV.measureTemp();
+  if (p1.length()) {
+    mV.setTemp(p1.toFloat());
+  } else {
+    mV.measureTemp();
+  }
   Serial.print("C|F: "); Serial.print(mV.tempC);
   Serial.print(" | "); Serial.println(mV.tempF);
 }
@@ -72,21 +75,13 @@ void calibrate() {
 }
 
 void mv() {
-  for (;;) {
-    mV.measuremV();
+  // for (;;) {
+  mV.measuremV();
 
-    Serial.print("mV: ");
-    Serial.println(mV.mV, 4);
-  }
-}
+  Serial.print("mV: ");
+  Serial.println(mV.mV, 4);
 
-void ph() {
-  for (;;) {
-    pH.measurepH();
-
-    Serial.print("pH: ");
-    Serial.println(pH.pH, 4);
-  }
+  // }
 }
 
 void data() {
@@ -156,7 +151,6 @@ void cmd_run() {
   if ((cmd == "temp") || (cmd == "t")) temperature();
   if ((cmd == "calibrate") || (cmd == "cal")) calibrate();
   if (cmd == "mv") mv();
-  if (cmd == "ph") ph();
   if ((cmd == "data") || (cmd == "d")) data();
   if (cmd == "low") low();
   if (cmd == "high") high();
@@ -205,3 +199,4 @@ void setup() {
 void loop() {
   cli_process();
 }
+

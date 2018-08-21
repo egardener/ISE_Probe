@@ -142,17 +142,43 @@ float ISE_pH::pHtomV(float pH)
   return (7 - pH) * PROBE_MV_TO_PH;
 }
 
+float ISE_pH::mVtopH(float mV)
+{
+  return fabs(7.0 - (mV / PROBE_MV_TO_PH));
+}
+
 void ISE_pH::calibrateSingle(float solutionpH)
 {
   ISE_Probe::calibrateSingle(pHtomV(solutionpH));
 }
+
 
 void ISE_pH::calibrateProbeLow(float solutionpH)
 {
   ISE_Probe::calibrateProbeLow(pHtomV(solutionpH));
 }
 
+float ISE_pH::getCalibrateLowReference()
+{
+  return mVtopH(ISE_Probe::getCalibrateLowReference());
+}
+
+float ISE_pH::getCalibrateLowReading()
+{
+  return mVtopH(ISE_Probe::getCalibrateLowReading());
+}
+
 void ISE_pH::calibrateProbeHigh(float solutionpH)
 {
   ISE_Probe::calibrateProbeHigh(pHtomV(solutionpH));
+}
+
+float ISE_pH::getCalibrateHighReference()
+{
+  return mVtopH(ISE_Probe::getCalibrateHighReference());
+}
+
+float ISE_pH::getCalibrateHighReading()
+{
+  return mVtopH(ISE_Probe::getCalibrateHighReading());
 }

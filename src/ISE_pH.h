@@ -61,9 +61,14 @@ public:
   float measurepH();
   float measurepH(float temp_C);
   float pHtomV(float pH);
+  float mVtopH(float mV);
   void  calibrateSingle(float solutionpH);
   void  calibrateProbeLow(float solutionpH);
+  float getCalibrateLowReference();
+  float getCalibrateLowReading();
   void  calibrateProbeHigh(float solutionpH);
+  float getCalibrateHighReference();
+  float getCalibrateHighReading();
 };
 
   #endif // ifndef ISEPROBE_H
