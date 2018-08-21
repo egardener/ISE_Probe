@@ -9,7 +9,7 @@ class ise_ph(iseprobe):
     pH = 0
     pOH = 0
 
-    def measurepH(self, temp_C):
+    def measurepH(self, temp_C=None):
         self.measuremV()
         if self.mV == -1:
             self.pH = -1
@@ -20,7 +20,7 @@ class ise_ph(iseprobe):
         self.pOH = abs(self.pH - 14)
 
         if self.usingTemperatureCompensation() is True:
-            if not temp_C:
+            if temp_C is not None:
                 self.measureTemp()
             else:
                 self.tempC = temp_C
@@ -53,8 +53,23 @@ class ise_ph(iseprobe):
     def calibrateProbeHigh(self, solutionpH):
         super(iseprobe, self).calibrateProbeHigh(pHtomV(solutionpH))
 
+    def getCalibrateHighReference(self):
+        return self.mVtopH(super(iseprobe, self).getCalibrateHighReference())
+
+    def getCalibrateHighReading(self):
+        return self.mVtopH(super(iseprobe, self).getCalibrateHighReading())
+
     def calibrateProbeLow(self, solutionpH):
         super(iseprobe, self).calibrateProbeLow(pHtomV(solutionpH))
 
+    def getCalibrateLowReference(self):
+        return self.mVtopH(super(iseprobe, self).getCalibrateLowReading())
+
+    def getCalibrateLowReading(self):
+        return self.mVtopH(super(iseprobe, self).getCalibrateLowReading())
+
     def pHtomV(self, pH):
         return (7 - pH) * PROBE_MV_TO_PH
+
+    def mVtopH(self, mV):
+        return abs(7.0 - (mV / PROBE_MV_TO_PH));
