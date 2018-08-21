@@ -140,6 +140,8 @@ void ISE_Probe::calibrateSingle(float solutionmV)
 {
   bool dualpoint = usingDualPoint();
 
+  if (solutionmV == 0) solutionmV = 1.00001;
+
   useDualPoint(false);
   _write_register(ISE_SOLUTION_REGISTER, solutionmV);
   _send_command(ISE_CALIBRATE_SINGLE);
@@ -336,6 +338,8 @@ void ISE_Probe::reset()
   _write_register(ISE_CALIBRATE_REFLOW_REGISTER,   NAN);
   _write_register(ISE_CALIBRATE_READHIGH_REGISTER, NAN);
   _write_register(ISE_CALIBRATE_READLOW_REGISTER,  NAN);
+  useDualPoint(false);
+  useTemperatureCompensation(false);
 }
 
 /*!

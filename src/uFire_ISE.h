@@ -72,7 +72,7 @@
 #define ISE_TASK_REGISTER 38               /*!< task register */
 
 #define ISE_TEMP_MEASURE_TIME 750
-#define ISE_MV_MEASURE_TIME 500
+#define ISE_MV_MEASURE_TIME 1750
 
 #define ISE_DUALPOINT_CONFIG_BIT 0         /*!< dual point config bit */
 #define ISE_TEMP_COMPENSATION_CONFIG_BIT 1 /*!< temperature compensation config bit */

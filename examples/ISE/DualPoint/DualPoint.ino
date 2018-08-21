@@ -2,6 +2,10 @@
    ufire.co for links to documentation, examples, and libraries
    github.com/u-fire for feature requests, bug reports, and  questions
    questions@ufire.co to get in touch with someone
+
+   This is compatible with hardware version 1a. 
+
+   It shows how to interactively calibrate a probe using dual-points.
  */
 
 #include <uFire_ISE.h>
@@ -17,9 +21,8 @@ void calibrateLow() {
     Serial.print("low mV: "); Serial.println(mv.mV);
   }
 
-  mv.calibrateProbeLow(Serial.readStringUntil('/r').toFloat());
-  Serial.print("low reference / read: "); Serial.print(mv.getCalibrateLowReference(), 2);
-  Serial.print(" / "); Serial.println(mv.getCalibrateLowReading(), 2);
+  float low_mV = Serial.readStringUntil('/r').toFloat();
+  mv.calibrateProbeLow(low_mV);
 }
 
 void calibrateHigh() {
@@ -31,13 +34,14 @@ void calibrateHigh() {
     Serial.print("high mV: "); Serial.println(mv.mV);
   }
 
-  mv.calibrateProbeHigh(Serial.readStringUntil('/r').toFloat());
-  Serial.print("high reference / read: "); Serial.print(mv.getCalibrateHighReference(), 2);
-  Serial.print(" / "); Serial.println(mv.getCalibrateHighReading(), 2);
+  float high_mV = Serial.readStringUntil('/r').toFloat();
+  mv.calibrateProbeHigh(high_mV);
 }
 
 void setup() {
   Serial.begin(9600);
+  Serial.flush();
+  mv.reset();
   calibrateLow();
   calibrateHigh();
   mv.useDualPoint(true);
