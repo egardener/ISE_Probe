@@ -26,7 +26,9 @@ class iseshell(cmd.Cmd):
     def do_temp(self, temp_C):
         """measures the temperature\nparameters: none"""
         if temp_C:
-            ise.setTemp(float(temp_C)
+            ise.setTemp(float(temp_C))
+        else:
+            ise.measureTemp()
 
         ise.measureTemp()
         print("C/F: " + str(ise.tempC) + " / " + str(ise.tempF))
