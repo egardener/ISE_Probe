@@ -1,7 +1,7 @@
 [package]
 name = "ufire_ise"
-version = "0.9.1"
-authors = ["Justin Decker <justind000@gmail.com>"]
+version = "0.9.3"
+authors = ["Justin Decker <justin@ufire.co>"]
 readme = "README.md"
 description = "Use any Ion Specific Electrode to measure pH with automatic temperature compensation, ORP, raw mV and temperature in Celsius"
 license = "MIT"
