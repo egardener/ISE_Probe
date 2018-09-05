@@ -50,8 +50,7 @@ class iseshell(cmd.Cmd):
         if low_reference_pH:
             ise.calibrateProbeLow(float(low_reference_pH))
 
-        print("\tlow reference / read: " + str(ise.getCalibrateLowReference()) +
-              " / " + str(ise.getCalibrateLowReading()))
+        print("\tlow reference / read: " + str(ise.getCalibrateLowReference()) + " / " + str(ise.getCalibrateLowReading()))
 
     def do_high(self, high_reference_pH):
         """returns or sets the high referencen/reading values\nparameters\n\thigh reference solution in mS"""

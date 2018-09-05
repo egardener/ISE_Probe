@@ -72,4 +72,4 @@ class ise_ph(iseprobe):
         return (7 - pH) * PROBE_MV_TO_PH
 
     def mVtopH(self, mV):
-        return abs(7.0 - (mV / PROBE_MV_TO_PH));
+        return abs(7.0 - (mV / PROBE_MV_TO_PH))

@@ -120,16 +120,16 @@ class iseprobe(object):
 
     def reset(self):
         n = float('nan')
-        self._write_register(ISE_CALIBRATE_SINGLE_REGISTER,   n)
-        self._write_register(ISE_CALIBRATE_REFHIGH_REGISTER,  n)
-        self._write_register(ISE_CALIBRATE_REFLOW_REGISTER,   n)
+        self._write_register(ISE_CALIBRATE_SINGLE_REGISTER, n)
+        self._write_register(ISE_CALIBRATE_REFHIGH_REGISTER, n)
+        self._write_register(ISE_CALIBRATE_REFLOW_REGISTER, n)
         self._write_register(ISE_CALIBRATE_READHIGH_REGISTER, n)
-        self._write_register(ISE_CALIBRATE_READLOW_REGISTER,  n)
+        self._write_register(ISE_CALIBRATE_READLOW_REGISTER, n)
 
     def setDualPointCalibration(self, refLow, refHigh, readLow, readHigh):
-        self._write_register(ISE_CALIBRATE_REFLOW_REGISTER,   refLow)
-        self._write_register(ISE_CALIBRATE_REFHIGH_REGISTER,  refHigh)
-        self._write_register(ISE_CALIBRATE_READLOW_REGISTER,  readLow)
+        self._write_register(ISE_CALIBRATE_REFLOW_REGISTER, refLow)
+        self._write_register(ISE_CALIBRATE_REFHIGH_REGISTER, refHigh)
+        self._write_register(ISE_CALIBRATE_READLOW_REGISTER, readLow)
         self._write_register(ISE_CALIBRATE_READHIGH_REGISTER, readHigh)
 
     def setI2CAddress(self, i2cAddress):
@@ -164,7 +164,7 @@ class iseprobe(object):
 
     def writeEEPROM(self, address, value):
         self._write_register(ISE_SOLUTION_REGISTER, address)
-        self._write_register(ISE_BUFFER_REGISTER,   value)
+        self._write_register(ISE_BUFFER_REGISTER, value)
         self._send_command(ISE_MEMORY_WRITE)
 
     def _bit_set(self, v, index, x):
