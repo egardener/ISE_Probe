@@ -39,6 +39,8 @@
 
 #define MEDIAN_MIN_SIZE     1
 #define MEDIAN_MAX_SIZE     19
+#define SIZE 9
+#define MIDDLE 3
 
 class RunningMedian {
 public:
@@ -51,7 +53,7 @@ public:
 
   RunningMedian()
   {
-    _size = 19;
+    _size = SIZE;
     clear();
   }
 
@@ -73,7 +75,7 @@ public:
   }
 
   float getAverage() {
-    return getAverage(9);
+    return getAverage(MIDDLE);
   }
 
   float getAverage(uint8_t nMedians)

@@ -9,8 +9,10 @@
    
    For more information and documentation, visit ufire.co
 
+  This is compatible with hardware version 2. 
+
    Display config information
-    config
+    config (or `c`)
 
    Basic usage:
     mv
@@ -27,10 +29,10 @@
     i2c 30
 
    Take a temperature reading
-    temp
+    temp (or `t`)
     
    Reset device configuration
-    reset
+    reset (or `r`)
  */
 
 #include <uFire_ISE.h>

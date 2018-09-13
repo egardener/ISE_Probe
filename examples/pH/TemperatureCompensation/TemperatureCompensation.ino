@@ -3,7 +3,7 @@
    github.com/u-fire for feature requests, bug reports, and  questions
    questions@ufire.co to get in touch with someone
 
-   This is compatible with hardware version 1a. 
+   This is compatible with hardware version 2. 
 
    This show show to use temperature compensation while taking a pH reading.
    If useTemperatureCompensation is true, a temperature reading is also taken, and an

@@ -3,7 +3,7 @@
    github.com/u-fire for feature requests, bug reports, and  questions
    questions@ufire.co to get in touch with someone
 
-   This is compatible with hardware version 1a. 
+   This is compatible with hardware version 2. 
 
    In ORP measurements, it's just the mV reading of the probe,
    but another measurement takes into account the potential of the probe

@@ -6,8 +6,10 @@
    This allows you to run various functions on a command-line like interface.
    For more information and documentation, visit ufire.co
 
+   This is compatible with hardware version 2. 
+
    Display config information
-    config
+    config (or `c`)
 
    Basic usage:
     mv
@@ -28,11 +30,14 @@
     high 7.0
     dp 1
 
+   Take a temperature reading
+    temp (or `t`)
+
    Change the I2C address
     i2c 30
 
    Reset device configuration
-    reset
+    reset (or `r`)
  */
 
 #include <ISE_pH.h>

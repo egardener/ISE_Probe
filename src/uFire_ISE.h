@@ -72,7 +72,7 @@
 #define ISE_TASK_REGISTER 38               /*!< task register */
 
 #define ISE_TEMP_MEASURE_TIME 750
-#define ISE_MV_MEASURE_TIME 1750
+#define ISE_MV_MEASURE_TIME 250
 
 #define ISE_DUALPOINT_CONFIG_BIT 0         /*!< dual point config bit */
 #define ISE_TEMP_COMPENSATION_CONFIG_BIT 1 /*!< temperature compensation config bit */
@@ -81,56 +81,56 @@ class ISE_Probe                            /*! ISE Class */
 {
 public:
 
-  uint8_t _address;
-  float tempC; /*!< Temperature in C */
-  float tempF; /*!< Temperature in F */
-  float mV;    /*!< mV of probe */
-  ISE_Probe(uint8_t i2c_address);
-  ISE_Probe();
+uint8_t _address;
+float tempC;   /*!< Temperature in C */
+float tempF;   /*!< Temperature in F */
+float mV;      /*!< mV of probe */
+ISE_Probe(uint8_t i2c_address);
+ISE_Probe();
   #ifdef ESP32
-  ISE_Probe(uint8_t sda,
-            uint8_t scl,
-            uint8_t i2c_address);
-  ISE_Probe(uint8_t sda,
-            uint8_t scl);
+ISE_Probe(uint8_t sda,
+          uint8_t scl,
+          uint8_t i2c_address);
+ISE_Probe(uint8_t sda,
+          uint8_t scl);
   #endif // ifndef ESP32
-  ~ISE_Probe();
-  float measuremV();
-  float measureTemp();
-  void  calibrateSingle(float solutionmV);
-  void  calibrateProbeLow(float solutionmV);
-  void  calibrateProbeHigh(float solutionmV);
-  void  setDualPointCalibration(float refLow,
-                                float refHigh,
-                                float readLow,
-                                float readHigh);
-  float   getCalibrateOffset();
-  void    useTemperatureCompensation(bool b);
-  bool    usingTemperatureCompensation();
-  void    setTemp(float temp_C);
-  void    useDualPoint(bool b);
-  bool    usingDualPoint();
-  float   getCalibrateHighReference();
-  float   getCalibrateLowReference();
-  float   getCalibrateHighReading();
-  float   getCalibrateLowReading();
-  uint8_t getVersion();
-  void    reset();
-  void    setI2CAddress(uint8_t i2cAddress);
-  void    writeEEPROM(uint8_t address,
-                      float   value);
-  float   readEEPROM(uint8_t address);
+~ISE_Probe();
+float measuremV();
+float measureTemp();
+void  calibrateSingle(float solutionmV);
+void  calibrateProbeLow(float solutionmV);
+void  calibrateProbeHigh(float solutionmV);
+void  setDualPointCalibration(float refLow,
+                              float refHigh,
+                              float readLow,
+                              float readHigh);
+float   getCalibrateOffset();
+void    useTemperatureCompensation(bool b);
+bool    usingTemperatureCompensation();
+void    setTemp(float temp_C);
+void    useDualPoint(bool b);
+bool    usingDualPoint();
+float   getCalibrateHighReference();
+float   getCalibrateLowReference();
+float   getCalibrateHighReading();
+float   getCalibrateLowReading();
+uint8_t getVersion();
+void    reset();
+void    setI2CAddress(uint8_t i2cAddress);
+void    writeEEPROM(uint8_t address,
+                    float value);
+float   readEEPROM(uint8_t address);
 
 private:
 
-  void    _change_register(uint8_t register);
-  void    _send_command(uint8_t command);
-  void    _write_register(uint8_t reg,
-                          float   f);
-  void    _write_byte(uint8_t reg,
-                      uint8_t val);
-  float   _read_register(uint8_t reg);
-  uint8_t _read_byte(uint8_t reg);
+void    _change_register(uint8_t register);
+void    _send_command(uint8_t command);
+void    _write_register(uint8_t reg,
+                        float f);
+void    _write_byte(uint8_t reg,
+                    uint8_t val);
+float   _read_register(uint8_t reg);
+uint8_t _read_byte(uint8_t reg);
 };
 
 #endif // ifndef ISEPROBE_H

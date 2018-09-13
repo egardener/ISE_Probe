@@ -2,6 +2,8 @@
    ufire.co for links to documentation, examples, and libraries
    github.com/u-fire for feature requests, bug reports, and  questions
    questions@ufire.co to get in touch with someone
+
+   This is compatible with hardware version 2. 
  */
 
  #include <ISE_pH.h>

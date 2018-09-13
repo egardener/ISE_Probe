@@ -3,7 +3,7 @@
    github.com/u-fire for feature requests, bug reports, and  questions
    questions@ufire.co to get in touch with someone
    
-   This is compatible with hardware version 1a. 
+   This is compatible with hardware version 2. 
 
    It shows how to interactively calibrate a probe using dual-points.
  */

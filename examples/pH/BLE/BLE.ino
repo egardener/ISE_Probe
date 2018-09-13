@@ -3,7 +3,7 @@
    github.com/u-fire for feature requests, bug reports, and  questions
    questions@ufire.co to get in touch with someone
 
-   1. This example is compatible with ISE Probe Interface hardware board version 1a.
+   1. This example is compatible with ISE Probe Interface hardware board version 2.
    2. This is for an ESP32 board.
    3. The 'ESP32 BLE Arduino' library needs to be installed.
    4. Connect the ISE Probe Interface to your ESP32 3.3/5v to VCC, GND to GND, SDA to 19 and SCL to 23
