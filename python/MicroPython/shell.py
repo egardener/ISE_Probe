@@ -3,7 +3,7 @@ import cmd
 from iseprobe import iseprobe
 
 # connect board SCL to pin 5, SDA to pin 4, but any pins can be used. -1 indicates software I2C.
-ise = iseprobe(0x3f, -1, scl=5, sda=4)
+ise = iseprobe(sda=19, scl=23)
 
 
 class iseshell(cmd.Cmd):
@@ -11,13 +11,16 @@ class iseshell(cmd.Cmd):
 
     def do_config(self, a):
         """prints out all the configuration data\nparameters: none"""
-        print("config: ")
+        print("ISE Interface Config: ")
         print("\toffset: " + str(ise.getCalibrateOffset()))
         print("\tdual point: " + str(ise.usingDualPoint()))
-        print("\tlow reference / read: " + str(ise.getCalibrateLowReference()) + " / " + str(ise.getCalibrateLowReading()))
-        print("\thigh reference / reading: " + str(ise.getCalibrateHighReference()) + " / " + str(ise.getCalibrateHighReading()))
+        print("\t  low reference | read: " + str(ise.getCalibrateLowReference()
+                                                 ) + " | " + str(ise.getCalibrateLowReading()))
+        print("\t  high reference | reading: " + str(ise.getCalibrateHighReference()
+                                                     ) + " | " + str(ise.getCalibrateHighReading()))
         print("\ttemp. compensation: " + str(ise.usingTemperatureCompensation()))
-        print("\tversion: " + (hex(ise.getVersion())))
+        print("\tversion: " + (str(ise.getVersion())) +
+              "." + (str(ise.getFirmware())))
 
     def do_reset(self, a):
         """reset all saved values\nparameters: none"""
@@ -31,7 +34,7 @@ class iseshell(cmd.Cmd):
             ise.measureTemp()
 
         ise.measureTemp()
-        print("C/F: " + str(ise.tempC) + " / " + str(ise.tempF))
+        print("C|F: " + str(ise.tempC) + " | " + str(ise.tempF))
 
     def do_cal(self, solution_pH):
         """calibrates the device\nparameters:\n\tcalibration solution in mS"""
@@ -50,14 +53,16 @@ class iseshell(cmd.Cmd):
         if low_reference_pH:
             ise.calibrateProbeLow(float(low_reference_pH))
 
-        print("\tlow reference / read: " + str(ise.getCalibrateLowReference()) + " / " + str(ise.getCalibrateLowReading()))
+        print("\tlow reference | read: " + str(ise.getCalibrateLowReference()
+                                               ) + " | " + str(ise.getCalibrateLowReading()))
 
     def do_high(self, high_reference_pH):
         """returns or sets the high referencen/reading values\nparameters\n\thigh reference solution in mS"""
         if high_reference_pH:
             ise.calibrateProbeHigh(float(high_reference_pH))
 
-        print("\thigh reference / reading: " + str(ise.getCalibrateHighReference()) + " / " + str(ise.getCalibrateHighReading()))
+        print("\thigh reference | reading: " + str(ise.getCalibrateHighReference()
+                                                   ) + " | " + str(ise.getCalibrateHighReading()))
 
     def do_tc(self, arg):
         """returns or sets temperature compensation information\nparameters\n\tbool to use compensation\n\ttemperature constant to use (255 for actual)"""
@@ -81,11 +86,19 @@ class iseshell(cmd.Cmd):
 
     def do_version(self, a):
         """prints the version register"""
-        print("\tversion: " + (hex(ise.getVersion())))
+        print("\tversion: " + (str(ise.getVersion())) +
+              "." + (str(ise.getFirmware())))
 
     def do_i2c(self, i2cAddress):
         """changes the I2C address"""
         ise.setI2CAddress(i2cAddress)
+
+    def do_read(self, address):
+        print(ise.readEEPROM(address))
+
+    def do_write(self, arg):
+        a = arg.split()
+        ise.writeEEPROM(a[0], a[1])
 
     def do_EOF(self, line):
         return True

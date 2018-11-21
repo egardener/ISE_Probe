@@ -144,8 +144,6 @@ void ISE_Probe::calibrateSingle(float solutionmV)
 {
   bool dualpoint = usingDualPoint();
 
-  // if (solutionmV == 0) solutionmV = 1.00001;
-
   useDualPoint(false);
   _write_register(ISE_SOLUTION_REGISTER, solutionmV);
   _send_command(ISE_CALIBRATE_SINGLE);
@@ -333,15 +331,29 @@ uint8_t ISE_Probe::getVersion()
 }
 
 /*!
+   \brief Retrieves the firmware version of the device
+   \return   version of firmware
+ */
+uint8_t ISE_Probe::getFirmware()
+{
+  return _read_byte(ISE_FW_VERSION_REGISTER);
+}
+
+/*!
    \brief Resets all the stored calibration information.
  */
 void ISE_Probe::reset()
 {
-  _write_register(ISE_CALIBRATE_SINGLE_REGISTER,   NAN);
-  _write_register(ISE_CALIBRATE_REFHIGH_REGISTER,  NAN);
-  _write_register(ISE_CALIBRATE_REFLOW_REGISTER,   NAN);
+  _write_register(ISE_CALIBRATE_SINGLE_REGISTER, NAN);
+  delay(10);
+  _write_register(ISE_CALIBRATE_REFHIGH_REGISTER, NAN);
+  delay(10);
+  _write_register(ISE_CALIBRATE_REFLOW_REGISTER, NAN);
+  delay(10);
   _write_register(ISE_CALIBRATE_READHIGH_REGISTER, NAN);
-  _write_register(ISE_CALIBRATE_READLOW_REGISTER,  NAN);
+  delay(10);
+  _write_register(ISE_CALIBRATE_READLOW_REGISTER, NAN);
+  delay(10);
   useDualPoint(false);
   useTemperatureCompensation(false);
 }
@@ -419,6 +431,26 @@ void ISE_Probe::writeEEPROM(uint8_t address, float value)
   _write_register(ISE_SOLUTION_REGISTER, address);
   _write_register(ISE_BUFFER_REGISTER,   value);
   _send_command(ISE_MEMORY_WRITE);
+}
+
+/*!
+   \code
+    ISE_Probe::connected();
+   \endcode
+
+   \brief Returns true if connected, false is disconnected
+
+ */
+bool ISE_Probe::connected()
+{
+  uint8_t retval = _read_byte(ISE_VERSION_REGISTER);
+
+  if (retval != 0xFF) {
+    return true;
+  }
+  else {
+    return false;
+  }
 }
 
 void ISE_Probe::_change_register(uint8_t r)
