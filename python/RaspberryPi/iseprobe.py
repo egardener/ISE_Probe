@@ -15,21 +15,22 @@ ISE_MEMORY_WRITE = 4
 ISE_MEMORY_READ = 2
 ISE_I2C = 1
 
-ISE_VERSION_REGISTER = 0
-ISE_MV_REGISTER = 1
-ISE_TEMP_REGISTER = 5
-ISE_CALIBRATE_SINGLE_REGISTER = 9
-ISE_CALIBRATE_REFHIGH_REGISTER = 13
-ISE_CALIBRATE_REFLOW_REGISTER = 17
-ISE_CALIBRATE_READHIGH_REGISTER = 21
-ISE_CALIBRATE_READLOW_REGISTER = 25
-ISE_SOLUTION_REGISTER = 29
-ISE_BUFFER_REGISTER = 33
-ISE_CONFIG_REGISTER = 37
-ISE_TASK_REGISTER = 38
+ISE_VERSION_REGISTER = 0             # hardware version */
+ISE_MV_REGISTER = 1                  # mV */
+ISE_TEMP_REGISTER = 5                # temperature in C */
+ISE_CALIBRATE_SINGLE_REGISTER = 9    # calibration offset */
+ISE_CALIBRATE_REFHIGH_REGISTER = 13  # reference high calibration */
+ISE_CALIBRATE_REFLOW_REGISTER = 17   # reference low calibration */
+ISE_CALIBRATE_READHIGH_REGISTER = 21  # reading high calibration */
+ISE_CALIBRATE_READLOW_REGISTER = 25  # reading low calibration */
+ISE_SOLUTION_REGISTER = 29          # reference ISE solution */
+ISE_BUFFER_REGISTER = 33             # buffer */
+ISE_FW_VERSION_REGISTER = 37         # firmware version
+ISE_CONFIG_REGISTER = 38             # config register */
+ISE_TASK_REGISTER = 39               # task register */
 
 ISE_TEMP_MEASURE_TIME = 750
-ISE_MV_MEASURE_TIME = 1750
+ISE_MV_MEASURE_TIME = 250
 
 ISE_DUALPOINT_CONFIG_BIT = 0
 ISE_TEMP_COMPENSATION_CONFIG_BIT = 1
@@ -63,7 +64,12 @@ class iseprobe(object):
         self._send_command(ISE_MEASURE_TEMP)
         time.sleep(ISE_TEMP_MEASURE_TIME / 1000.0)
         self.tempC = self._read_register(ISE_TEMP_REGISTER)
-        self.tempF = ((self.tempC * 9) / 5) + 32
+
+        if self.tempC == -127.0:
+            self.tempF = -127.0
+        else:
+            self.tempF = ((self.tempC * 9) / 5) + 32
+
         return self.tempC
 
     def setTemp(self, temp_C):
@@ -131,7 +137,7 @@ class iseprobe(object):
         self._write_register(ISE_CALIBRATE_READHIGH_REGISTER, readHigh)
 
     def setI2CAddress(self, i2cAddress):
-        self._write_byte(ISE_SOLUTION_REGISTER, int(i2cAddress))
+        self._write_register(ISE_SOLUTION_REGISTER, float(i2cAddress))
         self._send_command(ISE_I2C)
         self.address = int(i2cAddress)
 
@@ -164,6 +170,9 @@ class iseprobe(object):
         self._write_register(ISE_SOLUTION_REGISTER, address)
         self._write_register(ISE_BUFFER_REGISTER, value)
         self._send_command(ISE_MEMORY_WRITE)
+
+    def getFirmware(self):
+        return self._read_byte(ISE_FW_VERSION_REGISTER)
 
     def _bit_set(self, v, index, x):
         mask = 1 << index

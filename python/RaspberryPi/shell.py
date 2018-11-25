@@ -13,10 +13,13 @@ class iseshell(cmd.Cmd):
         print("config: ")
         print("\toffset: " + str(ise.getCalibrateOffset()))
         print("\tdual point: " + str(ise.usingDualPoint()))
-        print("\tlow reference / read: " + str(ise.getCalibrateLowReference()) + " / " + str(ise.getCalibrateLowReading()))
-        print("\thigh reference / reading: " + str(ise.getCalibrateHighReference()) + " / " + str(ise.getCalibrateHighReading()))
+        print("\tlow reference | read: " + str(ise.getCalibrateLowReference()
+                                               ) + " | " + str(ise.getCalibrateLowReading()))
+        print("\thigh reference | reading: " + str(ise.getCalibrateHighReference()
+                                                   ) + " | " + str(ise.getCalibrateHighReading()))
         print("\ttemp. compensation: " + str(ise.usingTemperatureCompensation()))
-        print("\tversion: " + (hex(ise.getVersion())))
+        print("\tversion: " + str(ise.getVersion()) +
+              "." + str(ise.getFirmware()))
 
     def do_reset(self, a):
         """reset all saved values\nparameters: none"""
@@ -48,14 +51,16 @@ class iseshell(cmd.Cmd):
         if low_reference_pH:
             ise.calibrateProbeLow(float(low_reference_pH))
 
-        print("\tlow reference / read: " + str(ise.getCalibrateLowReference()) + " / " + str(ise.getCalibrateLowReading()))
+        print("\tlow reference / read: " + str(ise.getCalibrateLowReference()
+                                               ) + " / " + str(ise.getCalibrateLowReading()))
 
     def do_high(self, high_reference_pH):
         """returns or sets the high referencen/reading values\nparameters\n\thigh reference solution in mS"""
         if high_reference_pH:
             ise.calibrateProbeHigh(float(high_reference_pH))
 
-        print("\thigh reference / reading: " + str(ise.getCalibrateHighReference()) + " / " + str(ise.getCalibrateHighReading()))
+        print("\thigh reference / reading: " + str(ise.getCalibrateHighReference()
+                                                   ) + " / " + str(ise.getCalibrateHighReading()))
 
     def do_tc(self, arg):
         """returns or sets temperature compensation information\nparameters\n\tbool to use compensation\n\ttemperature constant to use (255 for actual)"""
@@ -79,7 +84,8 @@ class iseshell(cmd.Cmd):
 
     def do_version(self, a):
         """prints the version register"""
-        print("\tversion: " + (hex(ise.getVersion())))
+        print("\tversion: " + str(ise.getVersion()) +
+              "." + str(ise.getFirmware()))
 
     def do_i2c(self, i2cAddress):
         """changes the I2C address"""
