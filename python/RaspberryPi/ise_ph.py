@@ -26,12 +26,12 @@ class ise_ph(iseprobe):
                 self.tempC = temp_C
 
             distance_from_7 = abs(7 - round(self.pH))
-            distance_from_25 = floor(abs(25 - round(temp)) / 10)
+            distance_from_25 = math.floor(abs(25 - round(self.tempC)) / 10)
             temp_multiplier = (distance_from_25 * distance_from_7) * TEMP_CORRECTION_FACTOR
 
             if (self.pH >= 8.0) and (self.tempC >= 35):
                 temp_multiplier *= -1
-            if (self.pH <= 6.0) and (temp <= 15):
+            if (self.pH <= 6.0) and (self.tempC <= 15):
                 temp_multiplier *= -1
 
             self.pH += temp_multiplier
