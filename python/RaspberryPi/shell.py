@@ -1,8 +1,8 @@
 import cmd
 
-from iseprobe import iseprobe
+from ise_ph import ise_ph
 
-ise = iseprobe(0x3f, 3)
+ise = ise_ph(0x3f, 3)
 
 
 class iseshell(cmd.Cmd):
@@ -45,6 +45,10 @@ class iseshell(cmd.Cmd):
         """starts a ph measurement\nparameters: none"""
         ise.measuremV()
         print("mV: " + str(ise.mV))
+
+    def do_ph(self, a):
+        ise.measurepH()
+        print("pH: " + str(ise.pH))
 
     def do_low(self, low_reference_pH):
         """returns or sets the low reference/reading values\nparameters\n\tlow reference solution in mS"""
