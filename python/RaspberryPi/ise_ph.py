@@ -17,45 +17,38 @@ class ise_ph(iseprobe):
             self.pOH = -1
             return -1
 
-        self.pH=abs(7.0 - (self.mV / PROBE_MV_TO_PH))
+        self.pH = abs(7.0 - (self.mV / PROBE_MV_TO_PH))
         if super().usingTemperatureCompensation():
             if newTemp is not False:
                 self.measureTemp()
 
             distance_from_7 = abs(7 - round(self.pH))
             distance_from_25 = math.floor(abs(25 - round(self.tempC)) / 10)
-            temp_multiplier = (distance_from_25 * distance_from_7) * TEMP_CORRECTION_FACTOR
+            temp_multiplier = (distance_from_25 *
+                               distance_from_7) * TEMP_CORRECTION_FACTOR
             if (self.pH >= 8.0) and (self.tempC >= 35):
                 temp_multiplier *= -1
             if (self.pH <= 6.0) and (self.tempC <= 15):
                 temp_multiplier *= -1
             self.pH += temp_multiplier
 
-        self.pOH=abs(self.pH - 14)
+        self.pOH = abs(self.pH - 14)
 
         if self.pH <= 0.0 or self.pH >= 14.0:
-            self.pH=-1
-            self.pOH=-1
+            self.pH = -1
+            self.pOH = -1
         if math.isnan(self.pH):
-            self.pH=-1
-            self.pOH=-1
+            self.pH = -1
+            self.pOH = -1
         if math.isinf(self.mV):
-            self.pH=-1
-            self.pOH=-1
+            self.pH = -1
+            self.pOH = -1
         return self.pH
 
     def calibrateSingle(self, solutionpH):
-        if super().usingTemperatureCompensation():
-            calibrationTemp = super().measureTemp()
-            self.setCalibrationTemperature(calibrationTemp)
-
         super().calibrateSingle(self.pHtomV(solutionpH))
 
     def calibrateProbeHigh(self, solutionpH):
-        if super().usingTemperatureCompensation():
-            calibrationTemp = super().measureTemp()
-            self.setCalibrationTemperature(calibrationTemp)
-
         super().calibrateProbeHigh(self.pHtomV(solutionpH))
 
     def getCalibrateHighReference(self):
@@ -65,10 +58,6 @@ class ise_ph(iseprobe):
         return self.mVtopH(super().getCalibrateHighReading())
 
     def calibrateProbeLow(self, solutionpH):
-        if super().usingTemperatureCompensation():
-            calibrationTemp = super().measureTemp()
-            self.setCalibrationTemperature(calibrationTemp)
-
         super().calibrateProbeLow(self.pHtomV(solutionpH))
 
     def getCalibrateLowReference(self):

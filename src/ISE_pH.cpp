@@ -33,7 +33,7 @@
 
 #include "ISE_pH.h"
 
-float ISE_pH::measurepH()
+float ISE_pH::_measure(bool newTemp)
 {
   // Turn mV into pH
   float mv = measuremV();
@@ -44,31 +44,30 @@ float ISE_pH::measurepH()
     pOH = -1;
     return -1;
   }
-  pH  = fabs(7.0 - (mv / PROBE_MV_TO_PH));
-  pOH = fabs(pH - 14);
+
+  pH = fabs(7.0 - (mv / PROBE_MV_TO_PH));
 
   // Determine the temperature correction
   if (usingTemperatureCompensation())
   {
-    float   temp             = measureTemp();
+    if (newTemp) measureTemp();
     uint8_t distance_from_7  = abs(7 - round(pH));
-    uint8_t distance_from_25 = floor(abs(25 - round(temp)) / 10);
+    uint8_t distance_from_25 = floor(abs(25 - round(tempC)) / 10);
     float   temp_multiplier  = (distance_from_25 * distance_from_7) * TEMP_CORRECTION_FACTOR;
-
-    if ((pH >= 8.0) && (temp >= 35))
+    if ((pH >= 8.0) && (tempC >= 35))
     {
       // negative
       temp_multiplier *= -1;
     }
-
-    if ((pH <= 6.0) && (temp <= 15))
+    if ((pH <= 6.0) && (tempC <= 15))
     {
       // negative
       temp_multiplier *= -1;
     }
-
     pH += temp_multiplier;
   }
+
+  pOH = fabs(pH - 14);
 
   if ((pH <= 0.0) || (pH > 14.0)) {
     pH  = -1;
@@ -82,59 +81,18 @@ float ISE_pH::measurepH()
     pH  = -1;
     pOH = -1;
   }
+
   return pH;
 }
 
-float ISE_pH::measurepH(float temp_C)
+float ISE_pH::measurepH(bool newTemp)
 {
-  // Turn mV into pH
-  float mv = measuremV();
+  return _measure(newTemp);
+}
 
-  if (mv == -1)
-  {
-    pH  = -1;
-    pOH = -1;
-    return -1;
-  }
-  pH  = fabs(7.0 - (mv / PROBE_MV_TO_PH));
-  pOH = fabs(pH - 14);
-
-  // Determine the temperature correction
-  if (usingTemperatureCompensation())
-  {
-    float   temp             = temp_C;
-    uint8_t distance_from_7  = abs(7 - round(pH));
-    uint8_t distance_from_25 = floor(abs(25 - round(temp)) / 10);
-    float   temp_multiplier  = (distance_from_25 * distance_from_7) * TEMP_CORRECTION_FACTOR;
-
-    if ((pH >= 8.0) && (temp >= 35))
-    {
-      // negative
-      temp_multiplier *= -1;
-    }
-
-    if ((pH <= 6.0) && (temp <= 15))
-    {
-      // negative
-      temp_multiplier *= -1;
-    }
-
-    pH += temp_multiplier;
-  }
-
-  if ((pH <= 0.0) || (pH > 14.0)) {
-    pH  = -1;
-    pOH = -1;
-  }
-  if (isinf(pH)) {
-    pH  = -1;
-    pOH = -1;
-  }
-  if (isnan(pH)) {
-    pH  = -1;
-    pOH = -1;
-  }
-  return pH;
+float ISE_pH::measurepH()
+{
+  return _measure(usingTemperatureCompensation());
 }
 
 float ISE_pH::pHtomV(float pH)
@@ -151,7 +109,6 @@ void ISE_pH::calibrateSingle(float solutionpH)
 {
   ISE_Probe::calibrateSingle(pHtomV(solutionpH));
 }
-
 
 void ISE_pH::calibrateProbeLow(float solutionpH)
 {

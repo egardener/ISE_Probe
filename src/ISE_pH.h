@@ -59,7 +59,7 @@ public:
 
   #endif // ifndef ESP32
   float measurepH();
-  float measurepH(float temp_C);
+  float measurepH(bool newTemp);
   float pHtomV(float pH);
   float mVtopH(float mV);
   void  calibrateSingle(float solutionpH);
@@ -69,6 +69,10 @@ public:
   void  calibrateProbeHigh(float solutionpH);
   float getCalibrateHighReference();
   float getCalibrateHighReading();
+
+private:
+
+  float _measure(bool newTemp);
 };
 
   #endif // ifndef ISEPROBE_H
