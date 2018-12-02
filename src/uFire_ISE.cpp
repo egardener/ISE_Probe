@@ -112,7 +112,14 @@ float ISE_Probe::measureTemp()
   _send_command(ISE_MEASURE_TEMP);
   delay(ISE_TEMP_MEASURE_TIME);
   tempC = _read_register(ISE_TEMP_REGISTER);
-  tempF = ((tempC * 9) / 5) + 32;
+  if (tempC == -127.0)
+  {
+    tempF = -127;
+  }
+  else
+  {
+    tempF = ((tempC * 9) / 5) + 32;
+  }
   return tempC;
 }
 
