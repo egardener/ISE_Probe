@@ -3,13 +3,15 @@
    github.com/u-fire for feature requests, bug reports, and  questions
    questions@ufire.co to get in touch with someone
 
+   This is compatible with hardware version 2.
+
    This allows you to run various functions on a command-line like interface.
 
    Set your Serial Monitor to Newline or Both NL & CR.
-   
+
    For more information and documentation, visit ufire.co
 
-  This is compatible with hardware version 2. 
+   This is compatible with hardware version 2.
 
    Display config information
     config (or `c`)
@@ -21,16 +23,19 @@
     cal 200
 
    Dual Point Calibration (in mV)
-    low 50
+    low 0
     high 200
     dp 1
 
    Change the I2C address
-    i2c 30
+    i2c 3d <address is interpreted as a hex number without the 0x>
 
    Take a temperature reading
     temp (or `t`)
-    
+
+   Set a temperature to use:
+    t 20 < to use 20 C as the temperature rather than using the attached temp.sensor>
+
    Reset device configuration
     reset (or `r`)
  */
@@ -131,7 +136,7 @@ void dual_point() {
 
 void i2c() {
   if (p1.length()) {
-    mV.setI2CAddress(p1.toInt());
+    mV.setI2CAddress(strtoul(p1.c_str(), 0, 16));
   }
 }
 
@@ -201,4 +206,3 @@ void setup() {
 void loop() {
   cli_process();
 }
-

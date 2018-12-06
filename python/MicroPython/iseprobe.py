@@ -1,8 +1,8 @@
 import math
 import time
 
-import ustruct
-from machine import I2C, Pin
+import ustruct  # pylint: disable=E0401
+from machine import I2C, Pin  # pylint: disable=E0401
 
 global i2c
 

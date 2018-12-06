@@ -6,7 +6,7 @@
    This allows you to run various functions on a command-line like interface.
    For more information and documentation, visit ufire.co
 
-   This is compatible with hardware version 2. 
+   This is compatible with hardware version 2.
 
    Display config information
     config (or `c`)
@@ -33,8 +33,11 @@
    Take a temperature reading
     temp (or `t`)
 
+   Set a temperature to use:
+   t 20 < to use 20 C as the temperature rather than using the attached temp.sensor>
+
    Change the I2C address
-    i2c 30
+    i2c 3d <address is interpreted as a hex number without the 0x>
 
    Reset device configuration
     reset (or `r`)
@@ -42,8 +45,8 @@
 
 #include <ISE_pH.h>
 
-ISE_pH    pH;
-String    buffer, cmd, p1, p2;
+ISE_pH pH;
+String buffer, cmd, p1, p2;
 
 void config() {
   Serial.println("ISE Config:");
@@ -78,26 +81,28 @@ void calibrate() {
 }
 
 void mv() {
-  //for (;;) {
-    pH.measuremV();
+  // for (;;) {
+  pH.measuremV();
 
-    Serial.print("mV: ");
-    Serial.println(pH.mV, 4);
-  //}
+  Serial.print("mV: ");
+  Serial.println(pH.mV, 4);
+
+  // }
 }
 
 void ph() {
-  //for (;;) {
-    if (p1.length()) {
-      pH.measurepH(p1.toFloat());
-    }
-    else{
-      pH.measurepH();
-    }
+  // for (;;) {
+  if (p1.length()) {
+    pH.measurepH(p1.toFloat());
+  }
+  else {
+    pH.measurepH();
+  }
 
-    Serial.print("pH: ");
-    Serial.println(pH.pH, 4);
-  //}
+  Serial.print("pH: ");
+  Serial.println(pH.pH, 4);
+
+  // }
 }
 
 void data() {

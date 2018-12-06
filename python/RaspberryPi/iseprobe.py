@@ -1,7 +1,8 @@
 import math
 import struct
 import time
-import smbus
+import smbus  # pylint: disable=E0401
+
 global i2c
 
 ISE_PROBE = 0x3F
